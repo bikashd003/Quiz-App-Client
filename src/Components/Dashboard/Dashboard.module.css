@@ -1,0 +1,133 @@
+.dashboard_container {
+  display: flex;
+  height: 100vh;
+}
+.dashboard_container .navbar {
+  padding: 2vw;
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+.dashboard_container .dashboard_content {
+  flex: 9 0 0;
+}
+.heading {
+  width: fit-content;
+  font-family: Jomhuria;
+  font-size: 5.5vmax;
+  font-weight: 400;
+  color: #474444;
+}
+.nav_items {
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+  width: fit-content;
+}
+.nav_items h1 {
+  width: fit-content;
+  font-family: "poppins";
+  color: #474444;
+  font-size: 1.5vmax;
+}
+.logout hr {
+  border: 1.5px solid #000;
+}
+.logout h1 {
+  font-family: "poppins";
+  color: #474444;
+  font-size: 1.5vmax;
+  text-transform: uppercase;
+}
+.activeBtn {
+  box-shadow: 0px 0px 50px 0px #0019ff3d;
+}
+.dashboard_content {
+  background-color: #ededed;
+}
+.quiz_Details {
+  display: flex;
+  gap: 1vw;
+}
+.trending_quiz_wraper {
+  margin: 5vw 10vw;
+}
+.trending_quiz_wraper > h1 {
+  font-family: "poppins";
+  margin: 6vw 0 2vw 0;
+}
+.quiz_view {
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 1.5vw 6vw;
+}
+.quiz_view h1,
+p {
+  display: inline;
+}
+.quiz_view h1 {
+  font-size: 3vw;
+}
+.quiz_view p {
+  margin-left: 1vw;
+  font-weight: 600;
+  font-size: 2vw;
+}
+.quiz_view h2 {
+    font-weight: 600;
+  font-size: 2vw;
+}
+.quiz_view h1,
+p,
+h2 {
+  font-family: "Poppins";
+}
+.quiz {
+  color: #ff5d01;
+}
+.question {
+  color: #60b84b;
+}
+.impressions {
+  color: #5076ff;
+}
+.trending_quizs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
+}
+.trends_quizs {
+  padding: 1vw;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.trends_quizs .quiz_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.quiz_impressions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.quiz_impressions p {
+  color: #ff5d01;
+  font-size: 1vw;
+  font-family: "poppins";
+}
+.trends_quizs .quiz_title h1 {
+  font-family: "poppins";
+  margin-right: 1.5vw;
+  color: #474444;
+  font-size: 2vw;
+  font-weight: 500;
+}
+.trends_quizs .created_on {
+  font-size: 1vw;
+  color: #60b84b;
+  font-family: "poppins";
+}

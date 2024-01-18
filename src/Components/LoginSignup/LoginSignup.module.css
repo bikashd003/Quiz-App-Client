@@ -1,0 +1,92 @@
+main {
+  background-color: #f2f2f2;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  width: 90vw;
+  background-color: #fff;
+  height: 60vh;
+  box-shadow: 0px 0px 30px 0px #00000026;
+}
+.container .heading {
+  font-family: Jomhuria;
+  font-size: 6.25rem;
+  font-weight: 400;
+  color: #474444;
+}
+.container .btns {
+  display: flex;
+  gap: 6vw;
+}
+.container .btns .btn {
+  cursor: pointer;
+  padding: 2px 3.5vw;
+  font-family: Poppins;
+  font-size: 1.5vw;
+  font-weight: 600;
+  background-color: transparent;
+  border: 0;
+  border-radius: 5px;
+}
+.container .btns .btn:hover {
+  background-color: #0019ff3d;
+}
+.activeBtn {
+  box-shadow: 0px 0px 50px 0px #0019ff3d;
+}
+
+.login_form {
+  margin-top: 3vw;
+  flex-direction: column;
+  display: flex;
+}
+.input_item {
+  margin-top: 1em;
+  display: flex;
+  justify-content: end;
+  gap: 3vw;
+  font-family: "poppins";
+  color: #474444;
+}
+.input_item .label {
+  font-size: 1.25rem;
+}
+.input_item .input {
+  border-radius: 10px 10px 0 0;
+  width: 30vw;
+  height: 4vh;
+  padding: 2px 4px;
+  font-size: 1.25rem;
+  background-color: #f4f4f4;
+  border: 0;
+}
+.input_item .input::placeholder {
+  color: #d60000;
+  font-size: 1.5vw;
+}
+.input_item .error {
+  border: 1.5px solid #d60000;
+}
+.submit_btn {
+  cursor: pointer;
+  margin: 2vw auto;
+  padding: 0.5vw 10vw;
+  border: 0;
+  border-radius: 8px;
+  font-size: 1.9vw;
+  font-family: "poppins";
+  color: #474444;
+  font-weight: 600;
+  background-color: #a9bcff;
+}
+.submit_btn:hover {
+  color: #6e6d6d;
+  background-color: #c5d0f5;
+}
