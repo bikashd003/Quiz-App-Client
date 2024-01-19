@@ -3,6 +3,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginSignup from "./Components/LoginSignup/LoginSignup";
 import Dashboard from "./Components/Dashboard/Dashboard";
+import { QuizProvider } from "./Components/CreateQuiz/QuizContext";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -10,7 +11,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <QuizProvider>
+        <Dashboard />
+      </QuizProvider>
+    ),
   },
 ]);
 

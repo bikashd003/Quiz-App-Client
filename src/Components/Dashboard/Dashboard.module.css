@@ -28,6 +28,7 @@
   width: fit-content;
 }
 .nav_items h1 {
+  cursor: pointer;
   width: fit-content;
   font-family: "poppins";
   color: #474444;
@@ -77,7 +78,7 @@ p {
   font-size: 2vw;
 }
 .quiz_view h2 {
-    font-weight: 600;
+  font-weight: 600;
   font-size: 2vw;
 }
 .quiz_view h1,
@@ -96,8 +97,24 @@ h2 {
 }
 .trending_quizs {
   display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  height: 20vw;
+  overflow-y: auto;
   flex-wrap: wrap;
   gap: 2vw;
+}
+.trending_quizs::-webkit-scrollbar {
+  width: 10px;
+}
+
+.trending_quizs::-webkit-scrollbar-thumb {
+  background-color: #bbbbbb;
+  border-radius: 6px;
+}
+
+.trending_quizs::-webkit-scrollbar-thumb:hover {
+  background-color: #949393;
 }
 .trends_quizs {
   padding: 1vw;
@@ -130,4 +147,9 @@ h2 {
   font-size: 1vw;
   color: #60b84b;
   font-family: "poppins";
+}
+.Analytics_container{
+  flex: 9 0 0;
+  background-color: #ededed;
+
 }
