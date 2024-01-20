@@ -1,0 +1,52 @@
+.analytics_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.analytics_container h1 {
+  font-family: "poppins";
+  margin-top: 2vw;
+  color: #5076ff;
+  font-weight: 600;
+  font-size: 50px;
+  margin-bottom: 4vw;
+}
+.analysis_navaber {
+  display: flex;
+  background-color: #5076ff;
+  width: 80vw;
+  gap: 1.5vw;
+  font-family: "poppins";
+  border-radius: 10px;
+  padding: 0.5vw 1vw;
+}
+.analysis_navaber h2 {
+  color: #fff;
+  font-weight: 500;
+}
+.quiz_details {
+  display: flex;
+  width: 80vw;
+  gap: 6.5vw;
+  font-family: "poppins";
+  border-radius: 10px;
+  padding: 0.5vw 1vw;
+}
+.quiz_details_container .quiz_details:nth-child(even) {
+  background-color: #b3c4ff;
+}
+
+.quiz_details h2 {
+  font-size: 1.2vw;
+}
+.quiz_edit {
+  color: #854cff;
+  
+}
+
+.delete_quiz {
+  color: #d60000;
+}
+.share_quiz {
+  color: #60b84b;
+}

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import createQuiz from "./CreateQuiz.module.css";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { QuizContext } from "./QuizContext";
 
 const Question = ({
   question,
@@ -13,6 +14,7 @@ const Question = ({
   handleCorrectOptionChange,
   handleTimerChange,
 }) => {
+  const { quizType } = useContext(QuizContext);
   return (
     <div>
       <input
@@ -74,7 +76,11 @@ const Question = ({
                   value={option.imageURL}
                   onChange={(e) =>
                     handleOptionChange(
-                      index, optionIndex, "text&image",e.target.value)
+                      index,
+                      optionIndex,
+                      "text&image",
+                      e.target.value
+                    )
                   }
                 />
               )}
@@ -97,27 +103,35 @@ const Question = ({
           )}
         </div>
 
-        <div className={createQuiz.timer_container}>
-          <h1>Timer</h1>
-          <h2
-            className={`${question.timer === "5sec" ? createQuiz.selected : ""}`}
-            onClick={() => handleTimerChange(index, "5sec")}
-          >
-            5sec
-          </h2>
-          <h2
-            className={`${question.timer === "10sec" ? createQuiz.selected : ""}`}
-            onClick={() => handleTimerChange(index, "10sec")}
-          >
-            10sec
-          </h2>
-          <h2
-            className={`${question.timer === "off" ? createQuiz.selected : ""}`}
-            onClick={() => handleTimerChange(index, "off")}
-          >
-            Off
-          </h2>
-        </div>
+        {quizType === "Q&A" && (
+          <div className={createQuiz.timer_container}>
+            <h1>Timer</h1>
+            <h2
+              className={`${
+                question.timer === "5sec" ? createQuiz.selected : ""
+              }`}
+              onClick={() => handleTimerChange(index, "5sec")}
+            >
+              5sec
+            </h2>
+            <h2
+              className={`${
+                question.timer === "10sec" ? createQuiz.selected : ""
+              }`}
+              onClick={() => handleTimerChange(index, "10sec")}
+            >
+              10sec
+            </h2>
+            <h2
+              className={`${
+                question.timer === "off" ? createQuiz.selected : ""
+              }`}
+              onClick={() => handleTimerChange(index, "off")}
+            >
+              Off
+            </h2>
+          </div>
+        )}
       </div>
     </div>
   );

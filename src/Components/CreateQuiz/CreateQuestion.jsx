@@ -5,9 +5,10 @@ import Question from "./Question";
 
 const CreateQuestion = ({ closeModal }) => {
   const { questions, addQuestion, removeQuestion, setQuestions } =
-  useContext(QuizContext);
-  console.log(questions)
+    useContext(QuizContext);
+  console.log(questions);
   const [startQuestionIndex, setStartQuestionIndex] = useState(1);
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(1);
 
   const handleQuestionType = (index, type) => {
     const updatedQuestions = [...questions];
@@ -46,22 +47,24 @@ const CreateQuestion = ({ closeModal }) => {
   const handleAddQuestion = () => {
     if (questions.length < 5) {
       addQuestion();
+      setSelectedQuestionIndex((prev) => prev + 1);
     }
   };
 
   const handleRemoveQuestion = (index) => {
-    console.log(questions[index-1].id)
-    removeQuestion(questions[index-1].id);
-    // console.log(questions)
-  
+    removeQuestion(questions[index - 1].id);
+    setSelectedQuestionIndex((prev) => prev - 1);
   };
-  
+
   const handleTimerChange = (questionIndex, timerValue) => {
     const updatedQuestions = [...questions];
     updatedQuestions[questionIndex].timer = timerValue;
     setQuestions(updatedQuestions);
   };
-  
+  const handleQuestion = (index) => {
+    console.log(index);
+    setSelectedQuestionIndex(index);
+  };
   const handleAddQuestionToQuiz = () => {
     questions.forEach((question) => {
       if (question.text && question.options.some((option) => option !== "")) {
@@ -80,7 +83,10 @@ const CreateQuestion = ({ closeModal }) => {
           <div className={createQuiz.switch_question}>
             {questions.map((_, index) => (
               <div key={index} className={createQuiz.question_numbers}>
-                <span className={createQuiz.question_number}>
+                <span
+                  className={createQuiz.question_number}
+                  onClick={()=>handleQuestion(index+1)}
+                >
                   {startQuestionIndex + index}
                 </span>
                 {index > 0 && (
@@ -104,20 +110,23 @@ const CreateQuestion = ({ closeModal }) => {
           </div>
           <h1>Max 5 questions</h1>
         </div>
-        {questions.map((question, index) => (
-          <Question
-            key={index}
-            question={question}
-            index={index}
-            handleQuestionType={handleQuestionType}
-            handleOptionChange={handleOptionChange}
-            handleQuestionText={handleQuestionText}
-            handleAddOption={handleAddOption}
-            handleRemoveOption={handleRemoveOption}
-            handleCorrectOptionChange={handleCorrectOptionChange}
-            handleTimerChange={handleTimerChange}
-          />
-        ))}
+        {questions.map(
+          (question, index) =>
+            index + startQuestionIndex === selectedQuestionIndex && (
+              <Question
+                key={index}
+                question={question}
+                index={index}
+                handleQuestionType={handleQuestionType}
+                handleOptionChange={handleOptionChange}
+                handleQuestionText={handleQuestionText}
+                handleAddOption={handleAddOption}
+                handleRemoveOption={handleRemoveOption}
+                handleCorrectOptionChange={handleCorrectOptionChange}
+                handleTimerChange={handleTimerChange}
+              />
+            )
+        )}
         <div className={createQuiz.create_quiz_btns}>
           <button onClick={closeModal}>Cancel</button>
           <button onClick={handleAddQuestionToQuiz}>Continue</button>
@@ -128,5 +137,3 @@ const CreateQuestion = ({ closeModal }) => {
 };
 
 export default CreateQuestion;
-
-
