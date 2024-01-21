@@ -41,12 +41,17 @@
 }
 .quiz_edit {
   color: #854cff;
+  cursor: pointer;
   
 }
 
 .delete_quiz {
   color: #d60000;
+  cursor: pointer;
+  
 }
 .share_quiz {
+  cursor: pointer;
+
   color: #60b84b;
 }

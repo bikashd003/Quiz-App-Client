@@ -14,7 +14,7 @@ const Question = ({
   handleCorrectOptionChange,
   handleTimerChange,
 }) => {
-  const { quizType } = useContext(QuizContext);
+  const { timer, optionType, quizType } = useContext(QuizContext);
   return (
     <div>
       <input
@@ -30,7 +30,8 @@ const Question = ({
           <input
             type="radio"
             name={`${index}`}
-            onClick={() => handleQuestionType(index, "text")}
+            onChange={() => handleQuestionType("text")}
+            checked={optionType === "text"}
           />
           Text
         </h3>
@@ -38,7 +39,8 @@ const Question = ({
           <input
             type="radio"
             name={`${index}`}
-            onClick={() => handleQuestionType(index, "image")}
+            onChange={() => handleQuestionType("image")}
+            checked={optionType === "image"}
           />
           Image URL
         </h3>
@@ -46,7 +48,8 @@ const Question = ({
           <input
             type="radio"
             name={`${index}`}
-            onClick={() => handleQuestionType(index, "textAndImage")}
+            onChange={() => handleQuestionType("textAndImage")}
+            checked={optionType === "textAndImage"}
           />
           Text & Image URL
         </h3>
@@ -55,30 +58,36 @@ const Question = ({
         <div className={createQuiz.options}>
           {question.options.map((option, optionIndex) => (
             <div key={optionIndex} className={createQuiz.option_item}>
-              <input
+          {quizType === "Q&A" && (
+                <input
                 type="radio"
                 name={`correctOption-${index}`}
                 checked={question.correctOption === optionIndex}
                 onChange={() => handleCorrectOptionChange(index, optionIndex)}
               />
+          )}
               <input
                 type="text"
-                placeholder={`Text`}
-                value={option.text}
+                placeholder={`${
+                  optionType === "text" || optionType === "textAndImage"
+                    ? "Text"
+                    : "Image URL"
+                }`}
+                value={option.text || ""}
                 onChange={(e) =>
                   handleOptionChange(index, optionIndex, "text", e.target.value)
                 }
               />
-              {question.type === "textAndImage" && (
+              {optionType === "textAndImage" && (
                 <input
                   type="text"
                   placeholder={`Image URL`}
-                  value={option.imageURL}
+                  value={option.imageURL || ""} 
                   onChange={(e) =>
                     handleOptionChange(
                       index,
                       optionIndex,
-                      "text&image",
+                      "imageURL",
                       e.target.value
                     )
                   }
@@ -107,26 +116,20 @@ const Question = ({
           <div className={createQuiz.timer_container}>
             <h1>Timer</h1>
             <h2
-              className={`${
-                question.timer === "5sec" ? createQuiz.selected : ""
-              }`}
-              onClick={() => handleTimerChange(index, "5sec")}
+              className={`${timer === 5 ? createQuiz.selected : ""}`}
+              onClick={() => handleTimerChange(5)}
             >
               5sec
             </h2>
             <h2
-              className={`${
-                question.timer === "10sec" ? createQuiz.selected : ""
-              }`}
-              onClick={() => handleTimerChange(index, "10sec")}
+              className={`${timer === 10 ? createQuiz.selected : ""}`}
+              onClick={() => handleTimerChange(10)}
             >
               10sec
             </h2>
             <h2
-              className={`${
-                question.timer === "off" ? createQuiz.selected : ""
-              }`}
-              onClick={() => handleTimerChange(index, "off")}
+              className={`${timer === 0 ? createQuiz.selected : ""}`}
+              onClick={() => handleTimerChange(0)}
             >
               Off
             </h2>

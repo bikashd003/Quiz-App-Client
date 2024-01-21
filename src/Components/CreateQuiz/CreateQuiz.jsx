@@ -6,14 +6,14 @@ import CreateQuestion from "./CreateQuestion";
 const CreateQuiz = ({ closeModal }) => {
   const [error, setError] = useState(false);
   const [questionModal, setQuestionModal] = useState(false);
-  const { title,quizType,setQuizType } = useContext(QuizContext);
+  const { title,setTitle,quizType,setQuizType } = useContext(QuizContext);
 
   const handleQuizType = (type) => {
     setQuizType(type);
   };
 
   const handleContinue = () => {
-    if (!title.current.value || !quizType) {
+    if (!title || !quizType) {
       setError(true);
     } else {
       setError(false);
@@ -23,9 +23,9 @@ const CreateQuiz = ({ closeModal }) => {
 
   return (
     <>
-      <div className={createQuiz.modal_wraper}></div>
+      <div className={createQuiz.modal_wraper} onClick={closeModal}></div>
       <div className={createQuiz.create_container}>
-        <input type="text" placeholder="Quiz name" ref={title} autoComplete="off" />
+        <input type="text" placeholder="Quiz name" value={title} onChange={(e)=>setTitle(e.target.value)} autoComplete="off" />
         <div className={createQuiz.quiz_type}>
           <h1>Quiz Type</h1>
           <h3

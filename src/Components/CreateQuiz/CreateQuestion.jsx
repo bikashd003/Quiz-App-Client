@@ -2,18 +2,33 @@ import React, { useState, useContext } from "react";
 import { QuizContext } from "./QuizContext";
 import createQuiz from "./CreateQuiz.module.css";
 import Question from "./Question";
+import axios from "axios";
+import { API } from "../../Services/Api";
+import LinkModal from "./LinkModal";
 
 const CreateQuestion = ({ closeModal }) => {
-  const { questions, addQuestion, removeQuestion, setQuestions } =
-    useContext(QuizContext);
-  console.log(questions);
+  const {
+    timer,
+    title,
+    setTitle,
+    quizType,
+    setQuizType,
+    setTimer,
+    setOptionType,
+    questions,
+    addQuestion,
+    removeQuestion,
+    setQuestions,
+    linkModal,
+    setLinkModal,
+  } = useContext(QuizContext);
   const [startQuestionIndex, setStartQuestionIndex] = useState(1);
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(1);
+  const [error, setError] = useState(false);
+  const[quizId,setQuizId]=useState("");
 
-  const handleQuestionType = (index, type) => {
-    const updatedQuestions = [...questions];
-    updatedQuestions[index].type = type;
-    setQuestions(updatedQuestions);
+  const handleQuestionType = (type) => {
+    setOptionType(type);
   };
   const handleQuestionText = (index, text) => {
     const updatedQuestions = [...questions];
@@ -21,9 +36,19 @@ const CreateQuestion = ({ closeModal }) => {
     setQuestions(updatedQuestions);
   };
 
-  const handleOptionChange = (questionIndex, optionIndex, value) => {
+  const handleOptionChange = (questionIndex, optionIndex, type, value) => {
     const updatedQuestions = [...questions];
-    updatedQuestions[questionIndex].options[optionIndex] = value;
+    if (type === "text") {
+      updatedQuestions[questionIndex].options[optionIndex] = {
+        ...updatedQuestions[questionIndex].options[optionIndex],
+        text: value,
+      };
+    } else if (type === "imageURL") {
+      updatedQuestions[questionIndex].options[optionIndex] = {
+        ...updatedQuestions[questionIndex].options[optionIndex],
+        imageURL: value,
+      };
+    }
     setQuestions(updatedQuestions);
   };
 
@@ -56,82 +81,193 @@ const CreateQuestion = ({ closeModal }) => {
     setSelectedQuestionIndex((prev) => prev - 1);
   };
 
-  const handleTimerChange = (questionIndex, timerValue) => {
-    const updatedQuestions = [...questions];
-    updatedQuestions[questionIndex].timer = timerValue;
-    setQuestions(updatedQuestions);
+  const handleTimerChange = (timerValue) => {
+    setTimer(timerValue);
   };
   const handleQuestion = (index) => {
-    console.log(index);
     setSelectedQuestionIndex(index);
   };
   const handleAddQuestionToQuiz = () => {
-    questions.forEach((question) => {
-      if (question.text && question.options.some((option) => option !== "")) {
-        setQuestions(question);
+    const token = localStorage.getItem("token");
+  
+    questions.map((question) => {
+      if (
+        !question.text ||
+        (!question.correctOption && quizType === "Q&A") ||
+        question.options.some((option) => option === "")
+      ) {
+        setError(true);
+      } else {
+        setError(false);
       }
     });
-    closeModal();
+  
+    if (!error) {
+      if (quizType === "Q&A") {
+        axios
+          .post(
+            `${API}/create-quiz`,
+            {
+              quizTitle: title,
+              quizType: quizType,
+              questions: questions.map((question) => ({
+                text: question.text,
+                correctOption: question.correctOption,
+                timer: timer,
+                options: question.options.map((option) => ({
+                  text: option.text,
+                  imageURL: option.imageURL,
+                })),
+              })),
+            },
+            { headers: { Authorization: `${token}` } }
+          )
+          .then((response) => {
+           setQuizId(response.data._id);
+            setLinkModal(true);
+            setQuestions([
+              {
+                id: 1,
+                text: "",
+                options: [
+                  { text: "", imageURL: "" },
+                  { text: "", imageURL: "" },
+                  { text: "", imageURL: "" },
+                ],
+                correctOption: "",
+              },
+            ]);
+            setTimer(0);
+            setOptionType("text");
+            setTitle("");
+            setSelectedQuestionIndex(1);
+            setQuizType("");
+          })
+          .catch((error) => {
+            console.log(error);
+            if (error.message === "unauthorized") {
+              alert("Please log in again");
+            }
+          });
+      }
+  
+      if (!error && quizType === "Poll Type") {
+        axios
+          .post(
+            `${API}/create-poll`,
+            {
+              quizTitle: title,
+              quizType: quizType,
+              polls: questions.map((question) => ({
+                text: question.text,
+                options: question.options.map((option) => ({
+                  text: option.text,
+                  imageURL: option.imageURL,
+                })),
+              })),
+            },
+            { headers: { Authorization: `${token}` } }
+          )
+          .then((response) => {
+            setQuizId(response.data._id)
+            setLinkModal(true);
+            setQuestions([
+              {
+                id: 1,
+                text: "",
+                options: [
+                  { text: "", imageURL: "" },
+                  { text: "", imageURL: "" },
+                  { text: "", imageURL: "" },
+                ]
+              },
+            ]);
+            setOptionType("text");
+            setTitle("");
+            setSelectedQuestionIndex(1);
+            setQuizType("");
+          })
+          .catch((error) => {
+            console.log(error);
+            if (error.message === "unauthorized") {
+              alert("Please log in again");
+            }
+          });
+      }
+    }
   };
+  
 
   return (
     <>
-      <div className={createQuiz.modal_wraper}></div>
+      <div className={createQuiz.modal_wraper} onClick={closeModal}></div>
 
-      <div className={createQuiz.question_container}>
-        <div className={createQuiz.question_numbers_wraper}>
-          <div className={createQuiz.switch_question}>
-            {questions.map((_, index) => (
-              <div key={index} className={createQuiz.question_numbers}>
-                <span
-                  className={createQuiz.question_number}
-                  onClick={()=>handleQuestion(index+1)}
-                >
-                  {startQuestionIndex + index}
-                </span>
-                {index > 0 && (
+      {!linkModal && (
+        <div className={createQuiz.question_container}>
+          <div className={createQuiz.question_numbers_wraper}>
+            <div className={createQuiz.switch_question}>
+              {questions.map((_, index) => (
+                <div key={index} className={createQuiz.question_numbers}>
                   <span
-                    className={createQuiz.remove_question}
-                    onClick={() => handleRemoveQuestion(index)}
+                    className={`${createQuiz.question_number} ${
+                      selectedQuestionIndex === index + 1
+                        ? createQuiz.selected
+                        : ""
+                    }`}
+                    onClick={() => handleQuestion(index + 1)}
                   >
-                    ×
+                    {startQuestionIndex + index}
                   </span>
-                )}
-              </div>
-            ))}
-            {questions.length <= 5 && (
-              <button
-                className={createQuiz.add_question_btn}
-                onClick={handleAddQuestion}
-              >
-                +
-              </button>
-            )}
+                  {index > 0 && (
+                    <span
+                      className={createQuiz.remove_question}
+                      onClick={() => handleRemoveQuestion(index)}
+                    >
+                      ×
+                    </span>
+                  )}
+                </div>
+              ))}
+              {questions.length <= 5 && (
+                <button
+                  className={createQuiz.add_question_btn}
+                  onClick={handleAddQuestion}
+                >
+                  +
+                </button>
+              )}
+            </div>
+            <h1>Max 5 questions</h1>
           </div>
-          <h1>Max 5 questions</h1>
+          {questions.map(
+            (question, index) =>
+              index + startQuestionIndex === selectedQuestionIndex && (
+                <Question
+                  key={index}
+                  question={question}
+                  index={index}
+                  handleQuestionType={handleQuestionType}
+                  handleOptionChange={handleOptionChange}
+                  handleQuestionText={handleQuestionText}
+                  handleAddOption={handleAddOption}
+                  handleRemoveOption={handleRemoveOption}
+                  handleCorrectOptionChange={handleCorrectOptionChange}
+                  handleTimerChange={handleTimerChange}
+                />
+              )
+          )}
+          <div className={createQuiz.create_quiz_btns}>
+            <button onClick={closeModal}>Cancel</button>
+            <button onClick={handleAddQuestionToQuiz}>Create Quiz</button>
+          </div>
+          {error && (
+            <h1 className={createQuiz.error_message}>
+              Please fill all the fields
+            </h1>
+          )}
         </div>
-        {questions.map(
-          (question, index) =>
-            index + startQuestionIndex === selectedQuestionIndex && (
-              <Question
-                key={index}
-                question={question}
-                index={index}
-                handleQuestionType={handleQuestionType}
-                handleOptionChange={handleOptionChange}
-                handleQuestionText={handleQuestionText}
-                handleAddOption={handleAddOption}
-                handleRemoveOption={handleRemoveOption}
-                handleCorrectOptionChange={handleCorrectOptionChange}
-                handleTimerChange={handleTimerChange}
-              />
-            )
-        )}
-        <div className={createQuiz.create_quiz_btns}>
-          <button onClick={closeModal}>Cancel</button>
-          <button onClick={handleAddQuestionToQuiz}>Continue</button>
-        </div>
-      </div>
+      )}
+      {linkModal && <LinkModal closeModal={closeModal} />}
     </>
   );
 };

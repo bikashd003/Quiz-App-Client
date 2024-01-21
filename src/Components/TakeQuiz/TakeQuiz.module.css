@@ -1,0 +1,68 @@
+.take_quiz_container {
+  background-color: #041325;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.questions_window {
+  background-color: #fff;
+  padding: 2vw;
+  width: 50vw;
+  font-family: "poppins";
+}
+.number_timer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5vw;
+}
+.number_timer h1:nth-child(1) {
+  color: #474444;
+}
+.number_timer h1:nth-child(2) {
+  color: #d60000;
+}
+.question_options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5vw;
+}
+.question_options div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 5vw;
+  margin-bottom: 1.5vw;
+}
+.question_options h1 {
+  color: #474444;
+  font-weight: 600;
+  font-size: 1.8vw;
+}
+.question_options div h2 {
+  background-color: #f0f0f0;
+  padding: 1.5vw 2vw;
+  border-radius: 10px;
+}
+.question_options div h2.selected {
+  border: 5px solid #5076ff;
+}
+.submit_button button {
+  text-align: center;
+  color: #fff;
+  font-size: 1.5vw;
+  font-weight: 600;
+
+  background-color: #60b84b;
+  border: 0;
+  border-radius: 10px;
+  padding: 1.2vw 8vw;
+  width: fit-content;
+}
+.submit_button {
+  display: flex;
+  justify-content: center;
+}
