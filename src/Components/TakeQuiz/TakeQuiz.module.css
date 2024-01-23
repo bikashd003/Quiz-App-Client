@@ -37,15 +37,24 @@
   gap: 5vw;
   margin-bottom: 1.5vw;
 }
-.question_options h1 {
+.question_options section h2 {
   color: #474444;
   font-weight: 600;
   font-size: 1.8vw;
+  
 }
-.question_options div h2 {
+.optionImage {
+  height: 5vw;
+  width: 8vw;
+  border-radius: 10px;
+}
+.question_options section {
   background-color: #f0f0f0;
   padding: 1.5vw 2vw;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .question_options div h2.selected {
   border: 5px solid #5076ff;
@@ -66,7 +75,7 @@
   display: flex;
   justify-content: center;
 }
-.trophy_window{
+.trophy_window {
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -74,13 +83,17 @@
   padding: 2vw 8vw;
   border-radius: 10px;
 }
-.trophy_window h1{
+.trophy_window h1 {
   font-family: "poppins";
   color: #474444;
   font-size: 2.5vw;
 }
-.trophy_window h1 span{
+.trophy_window h1 span {
   font-size: 2.5vw;
   font-family: "poppins";
-  color: #60B84B;
+  color: #60b84b;
+}
+.selected {
+  outline: 5px solid #60b84b;
+  outline-offset: -5px;
 }

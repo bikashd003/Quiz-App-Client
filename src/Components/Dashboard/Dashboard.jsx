@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dashboardStyle from "./Dashboard.module.css";
 import Navbar from "./Navbar";
 import QuizDetails from "./QuizDetails";
 import TrendingQuiz from "./TrendingQuiz";
 import Analytics from "../Analytics/Analytic";
 import CreateQuiz from "../CreateQuiz/CreateQuiz";
+import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [dasboardState, setDashboardState] = useState("dashboard");
   const [createModal, setCreateModal] = useState(false);
+  const navigate=useNavigate();
   const closeModal=()=>{
     setCreateModal(false);
   }
-
+useEffect(()=>{
+ const token=localStorage.getItem("token");
+  if(!token){
+    navigate("/");
+  }
+},[])
   return (
     <>
       <div className={dashboardStyle.dashboard_container}>
