@@ -66,3 +66,21 @@
   display: flex;
   justify-content: center;
 }
+.trophy_window{
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  align-items: center;
+  padding: 2vw 8vw;
+  border-radius: 10px;
+}
+.trophy_window h1{
+  font-family: "poppins";
+  color: #474444;
+  font-size: 2.5vw;
+}
+.trophy_window h1 span{
+  font-size: 2.5vw;
+  font-family: "poppins";
+  color: #60B84B;
+}

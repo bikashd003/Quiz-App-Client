@@ -1,7 +1,8 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import Signup from './Signup'
 import loginsignup from "./LoginSignup.module.css"
 import Login from './Login'
+import { useNavigate } from 'react-router-dom';
 
 const LoginSignup = () => {
     const[state,setState]=useState("signup")
@@ -12,6 +13,13 @@ const LoginSignup = () => {
     const handleLogin=()=>{
         setState("login");
     }
+    const navigate=useNavigate();
+    useEffect(()=>{
+      const token=localStorage.getItem("token");
+      if(token){
+        navigate("/dashboard");
+      }
+    })
   return (
     <>
     <main>

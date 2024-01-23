@@ -25,7 +25,7 @@ const CreateQuestion = ({ closeModal }) => {
   const [startQuestionIndex, setStartQuestionIndex] = useState(1);
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(1);
   const [error, setError] = useState(false);
-  const[quizId,setQuizId]=useState("");
+  const [quizId, setQuizId] = useState("");
 
   const handleQuestionType = (type) => {
     setOptionType(type);
@@ -89,19 +89,19 @@ const CreateQuestion = ({ closeModal }) => {
   };
   const handleAddQuestionToQuiz = () => {
     const token = localStorage.getItem("token");
-  
+
     questions.map((question) => {
-      if (
-        !question.text ||
-        (!question.correctOption && quizType === "Q&A") ||
-        question.options.some((option) => option === "")
-      ) {
+      if (!question.text) {
         setError(true);
+      } else if (quizType === "Q&A") {
+        if (!question.correctOption) {
+          setError(true);
+        }
       } else {
         setError(false);
       }
     });
-  
+
     if (!error) {
       if (quizType === "Q&A") {
         axios
@@ -123,25 +123,8 @@ const CreateQuestion = ({ closeModal }) => {
             { headers: { Authorization: `${token}` } }
           )
           .then((response) => {
-           setQuizId(response.data._id);
+            setQuizId(response.data._id);
             setLinkModal(true);
-            setQuestions([
-              {
-                id: 1,
-                text: "",
-                options: [
-                  { text: "", imageURL: "" },
-                  { text: "", imageURL: "" },
-                  { text: "", imageURL: "" },
-                ],
-                correctOption: "",
-              },
-            ]);
-            setTimer(0);
-            setOptionType("text");
-            setTitle("");
-            setSelectedQuestionIndex(1);
-            setQuizType("");
           })
           .catch((error) => {
             console.log(error);
@@ -150,7 +133,7 @@ const CreateQuestion = ({ closeModal }) => {
             }
           });
       }
-  
+
       if (!error && quizType === "Poll Type") {
         axios
           .post(
@@ -169,23 +152,8 @@ const CreateQuestion = ({ closeModal }) => {
             { headers: { Authorization: `${token}` } }
           )
           .then((response) => {
-            setQuizId(response.data._id)
+            setQuizId(response.data._id);
             setLinkModal(true);
-            setQuestions([
-              {
-                id: 1,
-                text: "",
-                options: [
-                  { text: "", imageURL: "" },
-                  { text: "", imageURL: "" },
-                  { text: "", imageURL: "" },
-                ]
-              },
-            ]);
-            setOptionType("text");
-            setTitle("");
-            setSelectedQuestionIndex(1);
-            setQuizType("");
           })
           .catch((error) => {
             console.log(error);
@@ -196,7 +164,6 @@ const CreateQuestion = ({ closeModal }) => {
       }
     }
   };
-  
 
   return (
     <>
@@ -267,7 +234,13 @@ const CreateQuestion = ({ closeModal }) => {
           )}
         </div>
       )}
-      {linkModal && <LinkModal closeModal={closeModal} />}
+      {linkModal && (
+        <LinkModal
+          closeModal={closeModal}
+          selectedQuestionIndex={setSelectedQuestionIndex}
+          quizId={quizId}
+        />
+      )}
     </>
   );
 };
