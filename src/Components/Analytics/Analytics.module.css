@@ -42,16 +42,69 @@
 .quiz_edit {
   color: #854cff;
   cursor: pointer;
-  
 }
 
 .delete_quiz {
   color: #d60000;
   cursor: pointer;
-  
 }
 .share_quiz {
   cursor: pointer;
 
   color: #60b84b;
+}
+.modal_wraper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(189, 189, 189, 0.9);
+}
+.delete_container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 4vw 5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.delete_container h1 {
+  color: #474444;
+  text-align: center;
+  font-size: 2.8vw;
+  font-weight: 600;
+  font-family: "poppins";
+}
+.delete_container .delete_btn {
+  display: flex;
+  justify-content: space-between;
+  gap: 2vw;
+}
+.delete_container .delete_btn button:nth-child(1) {
+  background-color: #ff4b4b;
+  border: 0;
+  outline: none;
+  border-radius: 10px;
+  color: #fff;
+  font-family: "poppins";
+  font-size: 1.5vw;
+  padding: 0.5vw 3vw;
+  width: 20vw;
+}
+.delete_container .delete_btn button:nth-child(2) {
+  box-shadow: 0px 0px 15px 0px #00000040;
+  background-color: transparent;
+  width: 20vw;
+  border: 0;
+  outline: none;
+  border-radius: 10px;
+  color: #474444;
+  font-family: "poppins";
+  font-size: 1.5vw;
+  padding: 0.5vw 3vw;
 }

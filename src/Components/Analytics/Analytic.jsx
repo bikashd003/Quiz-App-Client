@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import analyticsStyle from "./Analytics.module.css";
 import Quizes from "./Quizes";
-
+import { API } from "../../Services/Api";
+import axios from "axios";
 const Analytic = () => {
+  const [allQuiz, setAllQuiz] = useState([]);
+  const[deleteModal,setDeleteModal]=useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${API}/view-quiz`, {
+          headers: { Authorization: `${localStorage.getItem("token")}` },
+        });
+        setAllQuiz(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <div className={analyticsStyle.analytics_container}>
@@ -14,13 +31,9 @@ const Analytic = () => {
           <h2>Impression</h2>
         </div>
         <div className={analyticsStyle.quiz_details_container}>
-          <Quizes />
-          <Quizes />
-          <Quizes />
-          <Quizes />
-          <Quizes />
-          <Quizes />
-          <Quizes />
+          {allQuiz.map((quiz, index) => (
+            <Quizes key={index} quiz={quiz} index={index} deleteModal={deleteModal} setDeleteModal={setDeleteModal}/>
+          ))}
         </div>
       </div>
     </>
