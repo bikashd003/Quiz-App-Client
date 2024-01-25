@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import dashboardStyle from "./Dashboard.module.css"
 import {useNavigate} from "react-router-dom"
+import { QuizContext } from "../CreateQuiz/QuizContext";
 
-const Navbar = ({dasboardState,popup}) => {
+const Navbar = ({popup}) => {
+  const{setDashboardState}=useContext(QuizContext)
   const navigate=useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -13,8 +15,8 @@ const Navbar = ({dasboardState,popup}) => {
     <>
       <div className={dashboardStyle.heading}>QUIZZIE</div>
       <div className={dashboardStyle.nav_items}>
-        <h1 onClick={()=>dasboardState("dashboard")}>Dashboard</h1>
-        <h1 onClick={()=>dasboardState("analytics")}>Analytics</h1>
+        <h1 onClick={()=>setDashboardState("dashboard")}>Dashboard</h1>
+        <h1 onClick={()=>setDashboardState("analytics")}>Analytics</h1>
         <h1 onClick={()=>popup(true)}>Create Quiz</h1>
       </div>
       <div className={dashboardStyle.logout}>

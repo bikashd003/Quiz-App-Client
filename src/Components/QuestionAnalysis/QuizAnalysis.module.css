@@ -1,0 +1,60 @@
+.dashboard_container {
+  display: flex;
+  height: 100vh;
+}
+.dashboard_container .navbar {
+  padding: 2vw;
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+.analysis_container {
+  flex: 9 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5vw;
+  padding: 0 5vw;
+  gap: 4vw;
+}
+.heading {
+  display: flex;
+  justify-content: space-between;
+}
+.heading h1 {
+  font-family: "poppins";
+  color: #5076ff;
+  font-size: 2.5vw;
+  font-weight: 600;
+}
+.analysis_quiz > h1 {
+  font-size: 2vw;
+  font-family: "poppins";
+  font-weight: 600;
+}
+.heading .impression {
+  font-family: "poppins";
+  color: #ff5d01;
+  font-size: 0.8vw;
+  font-weight: 600;
+}
+.options {
+  display: flex;
+  gap: 2vw;
+  margin: 2vw 0;
+}
+.options h2 {
+  background-color: #fff;
+  font-size: 2vw;
+  border-radius: 10px;
+  text-align: center;
+  padding: 1vw 2vw;
+  color: #474444;
+}
+.options h2 span {
+  background-color: #fff;
+  font-size: 1vw;
+}

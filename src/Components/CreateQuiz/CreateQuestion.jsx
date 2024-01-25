@@ -78,7 +78,8 @@ const CreateQuestion = ({ closeModal }) => {
 
   const handleRemoveQuestion = (index) => {
     removeQuestion(questions[index - 1].id);
-    setSelectedQuestionIndex((prev) => prev - 1);
+    console.log(selectedQuestionIndex);
+    setSelectedQuestionIndex((prev) => (prev > 1 ? prev - 1 : prev));
   };
 
   const handleTimerChange = (timerValue) => {
@@ -195,7 +196,7 @@ const CreateQuestion = ({ closeModal }) => {
                   )}
                 </div>
               ))}
-              {questions.length <= 5 && (
+              {questions.length < 5 && (
                 <button
                   className={createQuiz.add_question_btn}
                   onClick={handleAddQuestion}

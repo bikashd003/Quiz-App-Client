@@ -3,6 +3,9 @@ import { createContext, useState, useRef } from "react";
 const QuizContext = createContext();
 
 const QuizProvider = ({ children }) => {
+  const [dasboardState, setDashboardState] = useState("dashboard");
+  const [createModal, setCreateModal] = useState(false);
+  const [analysisQuizId, setAnalysisQuizId] = useState(null);
   const [title, setTitle] = useState("");
   const [quizType, setQuizType] = useState("");
   const [timer, setTimer] = useState(0);
@@ -53,6 +56,12 @@ const QuizProvider = ({ children }) => {
         addQuestion,
         removeQuestion,
         setQuestions,
+        dasboardState,
+        setDashboardState,
+        createModal,
+        setCreateModal,
+        analysisQuizId,
+        setAnalysisQuizId,
       }}
     >
       {children}
