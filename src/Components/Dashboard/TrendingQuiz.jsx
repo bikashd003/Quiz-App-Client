@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import dashboardStyle from "./Dashboard.module.css";
 import eye from "../../assets/eyes.svg";
+import moment from "moment";
 
-const TrendingQuiz = () => {
+const TrendingQuiz = ({ quiz }) => {
   return (
     <>
       <div className={dashboardStyle.trends_quizs}>
         <div className={dashboardStyle.quiz_title}>
-          <h1>Quiz 1</h1>
+          <h1>{quiz.quizTitle}</h1>
           <div className={dashboardStyle.quiz_impressions}>
-            <p>666</p>
-          <img src={eye} alt={dashboardStyle.impression} /></div>
+            <p>{quiz.impression}</p>
+            <img src={eye} alt={dashboardStyle.impression} />
+          </div>
         </div>
         <div className={dashboardStyle.created_on}>
-          <p>Created on:04 sep, 2023</p>
+          <p>{moment(quiz.createdAt).format("DD MMM, YYYY")}</p>
         </div>
       </div>
     </>
@@ -21,5 +23,3 @@ const TrendingQuiz = () => {
 };
 
 export default TrendingQuiz;
-
-

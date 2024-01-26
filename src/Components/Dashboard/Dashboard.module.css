@@ -1,6 +1,8 @@
 .dashboard_container {
   display: flex;
   height: 100vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 .dashboard_container .navbar {
   padding: 2vw;

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import dashboardStyle from "./Dashboard.module.css";
 import Navbar from "./Navbar";
 import QuizDetails from "./QuizDetails";
-import TrendingQuiz from "./TrendingQuiz";
 import Analytics from "../Analytics/Analytic";
 import CreateQuiz from "../CreateQuiz/CreateQuiz";
 import { useNavigate } from "react-router-dom";
@@ -32,17 +31,7 @@ const Dashboard = () => {
         {createModal && <CreateQuiz closeModal={closeModal} />}
         {dasboardState === "dashboard" ? (
           <div className={dashboardStyle.dashboard_content}>
-            <div className={dashboardStyle.trending_quiz_wraper}>
-              <div className={dashboardStyle.quiz_Details}>
-                <QuizDetails className="quiz" />
-                <QuizDetails className="question" />
-                <QuizDetails className="impressions" />
-              </div>
-              <h1>Trending Quizs</h1>
-              <div className={dashboardStyle.trending_quizs}>
-                <TrendingQuiz />
-              </div>
-            </div>
+           <QuizDetails />
           </div>
         ) : dasboardState === "analytics" ? (
           <div className={dashboardStyle.Analytics_container}>
