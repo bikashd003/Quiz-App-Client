@@ -9,11 +9,16 @@ import axios from "axios";
 import { API } from "../../Services/Api";
 import { Link } from "react-router-dom";
 import { QuizContext } from "../CreateQuiz/QuizContext";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const Quizes = ({ quiz, index, fetchDataAndUpdate }) => {
   const formattedDate = moment(quiz.createdAt).format("DD MMM, YYYY");
   const [deleteModal, setDeleteModal] = useState(false);
-  const { setDashboardState,analysisQuizId,setAnalysisQuizId } = useContext(QuizContext);
+  const { setDashboardState, setAnalysisQuizId } =
+    useContext(QuizContext);
 
   const [quizId, setQuizId] = useState(null);
   const [type, setType] = useState("");
@@ -40,6 +45,20 @@ const Quizes = ({ quiz, index, fetchDataAndUpdate }) => {
       console.log(error);
     }
   }, [quizId, type]);
+  
+  const handleLinkCopy = (quizId) => {
+    let link;
+    link = `http://localhost:5173/quiz/${quizId}`;
+    
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
+        toast("Link copied to Clipboard");
+      })
+      .catch((error) => {
+        console.error("Unable to copy text to clipboard", error);
+      });
+  };
 
   return (
     <>
@@ -47,7 +66,7 @@ const Quizes = ({ quiz, index, fetchDataAndUpdate }) => {
         <h2>{index + 1}</h2>
         <h2>{quiz.quizTitle}</h2>
         <h2>{formattedDate}</h2>
-        <h2>455</h2>
+        <h2>{quiz.impression}</h2>
         <h2 className={analyticsStyle.quiz_edit}>
           <TbEdit />
         </h2>
@@ -57,12 +76,20 @@ const Quizes = ({ quiz, index, fetchDataAndUpdate }) => {
         >
           <RiDeleteBin6Fill />
         </h2>
-        <h2 className={analyticsStyle.share_quiz}>
+        <h2
+          className={analyticsStyle.share_quiz}
+          onClick={() => handleLinkCopy(quiz._id)}
+        >
           <IoMdShare />
         </h2>
-        <Link onClick={() => {setDashboardState("quizAnalysis"),setAnalysisQuizId(quiz._id)}}>
+        <Link
+          onClick={() => {
+            setDashboardState("quizAnalysis"), setAnalysisQuizId(quiz._id);
+          }}
+        >
           Question Wise Analysis
         </Link>
+
       </div>
       {deleteModal && (
         <>
@@ -76,6 +103,7 @@ const Quizes = ({ quiz, index, fetchDataAndUpdate }) => {
           </div>
         </>
       )}
+
     </>
   );
 };

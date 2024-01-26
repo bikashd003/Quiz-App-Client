@@ -8,6 +8,8 @@ import CreateQuiz from "../CreateQuiz/CreateQuiz";
 import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../CreateQuiz/QuizContext";
 import QuizAnalysis from "../QuestionAnalysis/QuizAnalysis";
+import { ToastContainer } from "react-toastify";
+
 const Dashboard = () => {
   const { dasboardState, createModal, setCreateModal } =
     useContext(QuizContext);
@@ -53,6 +55,8 @@ const Dashboard = () => {
         ) : (
           ""
         )}
+        <ToastContainer
+        />
       </div>
     </>
   );

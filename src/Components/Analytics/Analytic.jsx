@@ -3,6 +3,7 @@ import analyticsStyle from "./Analytics.module.css";
 import Quizes from "./Quizes";
 import { API } from "../../Services/Api";
 import axios from "axios";
+
 const Analytic = () => {
   const [allQuiz, setAllQuiz] = useState([]);
   const fetchData = useCallback(async () => {
@@ -39,6 +40,7 @@ const Analytic = () => {
             />
           ))}
         </div>
+       
       </div>
     </>
   );

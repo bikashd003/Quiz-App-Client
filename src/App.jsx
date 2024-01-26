@@ -5,6 +5,9 @@ import LoginSignup from "./Components/LoginSignup/LoginSignup";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import { QuizProvider } from "./Components/CreateQuiz/QuizContext";
 import TakeQuiz from "./Components/TakeQuiz/TakeQuiz";
+import axios from "axios";
+import { API } from "./Services/Api";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,6 +23,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/quiz/:quizId",
+    loader: async ({ params }) => {
+    return  await axios.get(`${API}/quiz-impression/${params.quizId}`);
+    },
     element: <TakeQuiz />,
   },
 ]);

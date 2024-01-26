@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import takeQuiz from "./TakeQuiz.module.css";
 import { API } from "../../Services/Api";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Score from "./Score";
 import CountDown from "./CountDown";
+
 const TakeQuiz = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -27,10 +28,34 @@ const TakeQuiz = () => {
       });
   }, [quizId]);
 
+  const submitUserAttempts = async () => {
+    if (quizType === "Q&A") {
+      try {
+        await axios.post(`${API}/saveUserAttempts`, {
+          quizId: quizId,
+          userAnswers: selectedOptions,
+        });
+      } catch (error) {
+        console.error("Error submitting user attempts:", error);
+      }
+    } else if (quizType === "Poll Type") {
+      try {
+        await axios.post(`${API}/saveUserPollAttempts`, {
+          quizId: quizId,
+          userAnswers: selectedOptions,
+        });
+      } catch (error) {
+        console.error("Error submitting user attempts:", error);
+      }
+    }
+  };
+
   const handleNextQuestion = () => {
     setCurrentQuestion((prev) => prev + 1);
     if (currentQuestion + 1 === questions.length) {
       setQuizCompleted(true);
+      setIsSubmitting(true);
+      submitUserAttempts();
     }
   };
 
@@ -57,11 +82,14 @@ const TakeQuiz = () => {
     });
     setScore(score);
   };
+
   const handleSubmitQuiz = () => {
     setQuizCompleted(true);
     setIsSubmitting(true);
     calculateScore();
+    submitUserAttempts();
   };
+
   return (
     <>
       {currentQuestion < questions.length && !quizCompleted ? (
@@ -69,7 +97,7 @@ const TakeQuiz = () => {
           <div className={takeQuiz.questions_window}>
             <div className={takeQuiz.number_timer}>
               <h1>{`${currentQuestion + 1}/${questions.length}`}</h1>
-              {quizType === "Q&A" ? (
+              {quizType === "Q&A" && questions[currentQuestion]?.timer > 0 ? (
                 <CountDown
                   key={currentQuestion}
                   initialTime={questions[currentQuestion]?.timer}
@@ -95,8 +123,13 @@ const TakeQuiz = () => {
                           : ""
                       }
                     >
-                     <h3>{option.text}</h3> 
-                      {option.imageURL && <img src={option.imageURL} className={takeQuiz.optionImage} />}
+                      <h3>{option.text}</h3>
+                      {option.imageURL && (
+                        <img
+                          src={option.imageURL}
+                          className={takeQuiz.optionImage}
+                        />
+                      )}
                     </section>
                   )
                 )}
@@ -113,7 +146,11 @@ const TakeQuiz = () => {
         </div>
       ) : quizCompleted ? (
         <div className={takeQuiz.take_quiz_container}>
-          <Score quizType={quizType} score={score} questionLength={questions.length} />
+          <Score
+            quizType={quizType}
+            score={score}
+            questionLength={questions.length}
+          />
         </div>
       ) : (
         <div className={takeQuiz.take_quiz_container}>
