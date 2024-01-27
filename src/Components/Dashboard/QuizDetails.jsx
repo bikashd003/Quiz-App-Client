@@ -3,6 +3,7 @@ import dashboardStyle from "./Dashboard.module.css";
 import TrendingQuiz from "./TrendingQuiz";
 import axios from "axios";
 import {API} from "../../Services/Api"
+import numeral from "numeral";
 
 const QuizDetails = () => {
   const [allQuiz, setAllQuiz] = useState([]);
@@ -28,7 +29,7 @@ const QuizDetails = () => {
     fetchData();
   }, [fetchData]);
 
-
+  const formattedImpressions =totalImpressions>1000? numeral(totalImpressions).format("0.0a"):totalImpressions;
 
   return (
     <>
@@ -51,7 +52,7 @@ const QuizDetails = () => {
           <div
             className={`${dashboardStyle.quiz_view} & ${dashboardStyle.impressions}`}
           >
-            <h1>{totalImpressions}</h1>
+            <h1>{formattedImpressions}</h1>
             <p>Total</p>
             <h2>impression</h2>
           </div>

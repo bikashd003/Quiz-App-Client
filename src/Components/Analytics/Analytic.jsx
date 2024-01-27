@@ -4,7 +4,7 @@ import Quizes from "./Quizes";
 import { API } from "../../Services/Api";
 import axios from "axios";
 
-const Analytic = () => {
+const Analytic = ({popup}) => {
   const [allQuiz, setAllQuiz] = useState([]);
   const fetchData = useCallback(async () => {
     try {
@@ -37,6 +37,7 @@ const Analytic = () => {
               quiz={quiz}
               index={index}
               fetchDataAndUpdate={fetchData}
+              popup={popup}
             />
           ))}
         </div>

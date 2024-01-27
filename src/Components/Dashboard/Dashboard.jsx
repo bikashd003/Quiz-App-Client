@@ -8,13 +8,16 @@ import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../CreateQuiz/QuizContext";
 import QuizAnalysis from "../QuestionAnalysis/QuizAnalysis";
 import { ToastContainer } from "react-toastify";
+import EditQuiz from "../EditQuiz/EditQuiz";
 
 const Dashboard = () => {
+  const[editModal,setEditModal]=useState(false)
   const { dasboardState, createModal, setCreateModal } =
     useContext(QuizContext);
   const navigate = useNavigate();
   const closeModal = () => {
     setCreateModal(false);
+    setEditModal(false);
   };
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,6 +31,7 @@ const Dashboard = () => {
         <div className={dashboardStyle.navbar}>
           <Navbar popup={setCreateModal} />
         </div>
+        {editModal && <EditQuiz closeModal={closeModal} />}
         {createModal && <CreateQuiz closeModal={closeModal} />}
         {dasboardState === "dashboard" ? (
           <div className={dashboardStyle.dashboard_content}>
@@ -35,7 +39,7 @@ const Dashboard = () => {
           </div>
         ) : dasboardState === "analytics" ? (
           <div className={dashboardStyle.Analytics_container}>
-            <Analytics />
+            <Analytics popup={setEditModal} />
           </div>
         ) : dasboardState === "quizAnalysis" ? (
           <div className={dashboardStyle.Analytics_container}>

@@ -1,5 +1,4 @@
-import { useCallback, useContext, useState } from "react";
-import React from "react";
+import React,{ useCallback, useContext, useState } from "react";
 import analyticsStyle from "./Analytics.module.css";
 import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin6Fill } from "react-icons/ri";
@@ -14,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-const Quizes = ({ quiz, index, fetchDataAndUpdate }) => {
+const Quizes = ({ quiz, index, fetchDataAndUpdate,popup }) => {
   const formattedDate = moment(quiz.createdAt).format("DD MMM, YYYY");
   const [deleteModal, setDeleteModal] = useState(false);
   const { setDashboardState, setAnalysisQuizId } =
@@ -67,22 +66,25 @@ const Quizes = ({ quiz, index, fetchDataAndUpdate }) => {
         <h2>{quiz.quizTitle}</h2>
         <h2>{formattedDate}</h2>
         <h2>{quiz.impression}</h2>
+        <div className={analyticsStyle.analysis_btns}>
         <h2 className={analyticsStyle.quiz_edit}>
-          <TbEdit />
+          <TbEdit size={"1.5vw"} onClick={()=>{setAnalysisQuizId(quiz._id),popup(true)}}/>
         </h2>
         <h2
           className={analyticsStyle.delete_quiz}
           onClick={() => handleDeleteQuiz(quiz._id, quiz.quizType)}
         >
-          <RiDeleteBin6Fill />
+          <RiDeleteBin6Fill size={"1.5vw"}/>
         </h2>
         <h2
           className={analyticsStyle.share_quiz}
           onClick={() => handleLinkCopy(quiz._id)}
         >
-          <IoMdShare />
+          <IoMdShare size={"1.5vw"}/>
         </h2>
-        <Link
+        </div>
+       
+        <Link className={analyticsStyle.analysis_link}
           onClick={() => {
             setDashboardState("quizAnalysis"), setAnalysisQuizId(quiz._id);
           }}

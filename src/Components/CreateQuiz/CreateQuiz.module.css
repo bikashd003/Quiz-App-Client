@@ -303,6 +303,7 @@ font-size: 2vw;
 padding: 0.5vw 4vw;
 }
 .link_modal .close_link{
+  cursor: pointer;
   position: absolute;
   right: 20px;
   top: 20px;
