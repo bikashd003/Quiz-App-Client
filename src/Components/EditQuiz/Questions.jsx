@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import createQuiz from "../CreateQuiz/CreateQuiz.module.css"
+import createQuiz from "../CreateQuiz/CreateQuiz.module.css";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { QuizContext } from "../CreateQuiz/QuizContext";
 const Questions = ({
@@ -58,31 +58,32 @@ const Questions = ({
         <div className={createQuiz.options}>
           {question.options.map((option, optionIndex) => (
             <div key={optionIndex} className={createQuiz.option_item}>
-          {quizType === "Q&A" && (
+              {quizType === "Q&A" && (
                 <input
-                type="radio"
-                name={`correctOption-${index}`}
-                checked={question.correctOption === optionIndex}
-                onChange={() => handleCorrectOptionChange(index, optionIndex)}
-              />
-          )}
-              <input
+                  type="radio"
+                  name={`correctOption-${index}`}
+                  value={option.correctOption || ""}
+                  checked={question.correctOption == optionIndex}
+                  onChange={() => handleCorrectOptionChange(index, optionIndex)}
+                />
+              )}
+            <input
                 type="text"
                 placeholder={`${
                   optionType === "text" || optionType === "textAndImage"
                     ? "Text"
                     : "Image URL"
                 }`}
-                value={option.text || ""}
+                value={`${optionType==="text"?option.text || "": option.imageURL || ""}`}
                 onChange={(e) =>
-                  handleOptionChange(index, optionIndex, "text", e.target.value)
+                  handleOptionChange(index, optionIndex, `${optionType==="text"?"text":"imageURL"}`, e.target.value)
                 }
               />
               {optionType === "textAndImage" && (
                 <input
                   type="text"
                   placeholder={`Image URL`}
-                  value={option.imageURL || ""} 
+                  value={option.imageURL || ""}
                   onChange={(e) =>
                     handleOptionChange(
                       index,

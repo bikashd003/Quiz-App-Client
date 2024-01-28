@@ -73,9 +73,9 @@ const Question = ({
                     ? "Text"
                     : "Image URL"
                 }`}
-                value={option.text || ""}
+                value={`${optionType==="text"?option.text || "": option.imageURL || ""}`}
                 onChange={(e) =>
-                  handleOptionChange(index, optionIndex, "text", e.target.value)
+                  handleOptionChange(index, optionIndex, `${optionType==="text"?"text":"imageURL"}`, e.target.value)
                 }
               />
               {optionType === "textAndImage" && (

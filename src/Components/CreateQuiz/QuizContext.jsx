@@ -29,7 +29,7 @@ const QuizProvider = ({ children }) => {
         { text: "", imageURL: "" },
         { text: "", imageURL: "" },
       ],
-      correctOption: "",
+      correctOption: null,
     };
     setQuestions([...questions, newQuestion]);
   };

@@ -15,6 +15,7 @@ const CreateQuestion = ({ closeModal }) => {
     setQuizType,
     setTimer,
     setOptionType,
+    optionType,
     questions,
     addQuestion,
     removeQuestion,
@@ -115,6 +116,7 @@ const CreateQuestion = ({ closeModal }) => {
                 text: question.text,
                 correctOption: question.correctOption,
                 timer: timer,
+                optionType: optionType,
                 options: question.options.map((option) => ({
                   text: option.text,
                   imageURL: option.imageURL,
@@ -146,6 +148,7 @@ const CreateQuestion = ({ closeModal }) => {
                 text: question.text,
                 options: question.options.map((option) => ({
                   text: option.text,
+                  optionType: optionType,
                   imageURL: option.imageURL,
                 })),
               })),

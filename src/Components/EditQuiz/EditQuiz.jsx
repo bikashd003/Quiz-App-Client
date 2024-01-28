@@ -9,6 +9,7 @@ const EditQuiz = ({ closeModal }) => {
   const {
     timer,
     setTitle,
+    title,
     quizType,
     setQuizType,
     setTimer,
@@ -39,11 +40,17 @@ const EditQuiz = ({ closeModal }) => {
           setQuizId(res.data._id);
           setQuizType(res.data.quizType);
           setTitle(res.data.quizTitle);
-          setQuestions(res.data.questions);
-          if (res.data.questions.length > 0) {
+          setOptionType(res.data.questions[0]?.optionType || res.data.polls[0]?.optionType);
+          setQuestions(
+            res.data.questions.map((question) => ({
+              ...question,
+              correctOption: question.correctOption,
+            })) || res.data.polls
+          );
+         
+          if (res.data.questions) {
             setTimer(res.data.questions[0].timer);
           }
-          console.log(timer);
         })
         .catch((err) => {
           console.log(err);
@@ -108,8 +115,9 @@ const EditQuiz = ({ closeModal }) => {
   const handleQuestion = (index) => {
     setSelectedQuestionIndex(index);
   };
-  const handleAddQuestionToQuiz = () => {
+  const handleUpdateQuiz = () => {
     setLinkModal(true);
+    console.log(questions)
     questions.map((question) => {
       if (!question.text) {
         setError(true);
@@ -121,7 +129,68 @@ const EditQuiz = ({ closeModal }) => {
         setError(false);
       }
     });
+    if (!error) {
+      if (quizType === "Q&A") {
+        axios
+          .put(
+            `${API}/update-quiz`,
+            {
+              quizTitle: title,
+              quizType: quizType,
+              questions: questions.map((question) => ({
+                text: question.text,
+                correctOption: question.correctOption,
+                timer: timer,
+                options: question.options.map((option) => ({
+                  text: option.text,
+                  imageURL: option.imageURL,
+                })),
+              })),
+              quizId: quizId,
+            },
+            {
+              headers: { Authorization: `${localStorage.getItem("token")}` },
+            }
+          )
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      if (quizType === "Poll Type") {
+        axios
+          .put(
+            `${API}/update-poll`,
+            {
+              quizTitle: title,
+              quizType: quizType,
+              polls: questions.map((question) => ({
+                text: question.text,
+                options: question.options.map((option) => ({
+                  text: option.text,
+                  imageURL: option.imageURL,
+                })),
+              })),
+              quizId: quizId,
+            },
+            { headers: { Authorization: `${localStorage.getItem("token")}` } }
+          )
+          .then((response) => {
+            setQuizId(response.data._id);
+            setLinkModal(true);
+          })
+          .catch((error) => {
+            console.log(error);
+            if (error.message === "unauthorized") {
+              alert("Please log in again");
+            }
+          });
+      }
+    }
   };
+
   return (
     <>
       <div className={createQuiz.modal_wraper}></div>
@@ -182,7 +251,7 @@ const EditQuiz = ({ closeModal }) => {
           )}
           <div className={createQuiz.create_quiz_btns}>
             <button onClick={closeModal}>Cancel</button>
-            <button onClick={handleAddQuestionToQuiz}>Update Quiz</button>
+            <button onClick={handleUpdateQuiz}>Update Quiz</button>
           </div>
           {error && (
             <h1 className={createQuiz.error_message}>
@@ -193,7 +262,7 @@ const EditQuiz = ({ closeModal }) => {
       )}
       {linkModal && (
         <LinkModal
-        closeModal={closeModal}
+          closeModal={closeModal}
           selectedQuestionIndex={setSelectedQuestionIndex}
           quizId={quizId}
         />

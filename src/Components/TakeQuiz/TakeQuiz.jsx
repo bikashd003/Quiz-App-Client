@@ -123,7 +123,7 @@ const TakeQuiz = () => {
                           : ""
                       }
                     >
-                      <h3>{option.text}</h3>
+                     {option.text &&  <h3>{option.text}</h3> }
                       {option.imageURL && (
                         <img
                           src={option.imageURL}
