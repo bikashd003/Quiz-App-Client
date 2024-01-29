@@ -4,7 +4,7 @@ import Quizes from "./Quizes";
 import { API } from "../../Services/Api";
 import axios from "axios";
 
-const Analytic = ({popup}) => {
+const Analytic = ({ popup }) => {
   const [allQuiz, setAllQuiz] = useState([]);
   const fetchData = useCallback(async () => {
     try {
@@ -41,7 +41,11 @@ const Analytic = ({popup}) => {
             />
           ))}
         </div>
-       
+      </div>
+      <div className={analyticsStyle.footer}>
+        <h4>
+         &#123;More quiz can be added &#125;
+        </h4>
       </div>
     </>
   );

@@ -145,7 +145,7 @@ const TakeQuiz = () => {
           </div>
         </div>
       ) : quizCompleted ? (
-        <div className={takeQuiz.take_quiz_container}>
+        <div className={takeQuiz.score_container}>
           <Score
             quizType={quizType}
             score={score}

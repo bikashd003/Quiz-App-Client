@@ -7,12 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const LinkModal = ({ closeModal, selectedQuestionIndex, quizId }) => {
   const {
-    setTitle,
-    setQuizType,
-    setTimer,
-    setOptionType,
-    setLinkModal,
-    setQuestions,
+    resetState
   } = useContext(QuizContext);
 
   const [quizLink, setQuizLink] = useState("");
@@ -25,25 +20,9 @@ const LinkModal = ({ closeModal, selectedQuestionIndex, quizId }) => {
   }, [quizId]);
 
   const handleReset = () => {
-    setQuestions([
-      {
-        id: 1,
-        text: "",
-        options: [
-          { text: "", imageURL: "" },
-          { text: "", imageURL: "" },
-          { text: "", imageURL: "" },
-        ],
-        correctOption: "",
-      },
-    ]);
-    setTimer(0);
-    setOptionType("text");
-    setTitle("");
+    resetState();
     selectedQuestionIndex(1);
-    setQuizType("");
     setQuizLink("");
-    setLinkModal(false);
   };
   const handleCopy = () => {
     const linkInput = document.getElementById("quizLinkInput");
@@ -57,6 +36,10 @@ const LinkModal = ({ closeModal, selectedQuestionIndex, quizId }) => {
         console.error("Unable to copy text to clipboard", error);
       });
   };
+  const handleCancel = () => {
+    handleReset();
+    closeModal();
+  }
   return (
     <>
       <div className={createQuiz.modal_wraper}></div>
@@ -64,10 +47,7 @@ const LinkModal = ({ closeModal, selectedQuestionIndex, quizId }) => {
       <div className={createQuiz.link_modal}>
         <button
           className={createQuiz.close_link}
-          onClick={() => {
-            closeModal();
-            handleReset();
-          }}
+          onClick={handleCancel}
         >
           <AiOutlineClose />
         </button>
@@ -76,8 +56,8 @@ const LinkModal = ({ closeModal, selectedQuestionIndex, quizId }) => {
         <button className={createQuiz.share_link} onClick={handleCopy}>
           Share
         </button>
-      </div>
       <ToastContainer />
+      </div>
     </>
   );
 };

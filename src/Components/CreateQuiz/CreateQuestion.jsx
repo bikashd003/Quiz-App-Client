@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, {useState, useContext } from "react";
 import { QuizContext } from "./QuizContext";
 import createQuiz from "./CreateQuiz.module.css";
 import Question from "./Question";
@@ -10,9 +10,7 @@ const CreateQuestion = ({ closeModal }) => {
   const {
     timer,
     title,
-    setTitle,
     quizType,
-    setQuizType,
     setTimer,
     setOptionType,
     optionType,
@@ -22,12 +20,15 @@ const CreateQuestion = ({ closeModal }) => {
     setQuestions,
     linkModal,
     setLinkModal,
+    resetState,
   } = useContext(QuizContext);
   const [startQuestionIndex, setStartQuestionIndex] = useState(1);
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(1);
   const [error, setError] = useState(false);
   const [quizId, setQuizId] = useState("");
+  const[optionChange,setOptionChange]=useState("no")
 
+  
   const handleQuestionType = (type) => {
     setOptionType(type);
   };
@@ -39,6 +40,7 @@ const CreateQuestion = ({ closeModal }) => {
 
   const handleOptionChange = (questionIndex, optionIndex, type, value) => {
     const updatedQuestions = [...questions];
+
     if (type === "text") {
       updatedQuestions[questionIndex].options[optionIndex] = {
         ...updatedQuestions[questionIndex].options[optionIndex],
@@ -50,8 +52,10 @@ const CreateQuestion = ({ closeModal }) => {
         imageURL: value,
       };
     }
+  
     setQuestions(updatedQuestions);
   };
+  
 
   const handleRemoveOption = (questionIndex, optionIndex) => {
     const updatedQuestions = [...questions];
@@ -79,7 +83,6 @@ const CreateQuestion = ({ closeModal }) => {
 
   const handleRemoveQuestion = (index) => {
     removeQuestion(questions[index - 1].id);
-    console.log(selectedQuestionIndex);
     setSelectedQuestionIndex((prev) => (prev > 1 ? prev - 1 : prev));
   };
 
@@ -146,9 +149,9 @@ const CreateQuestion = ({ closeModal }) => {
               quizType: quizType,
               polls: questions.map((question) => ({
                 text: question.text,
+                optionType: optionType,
                 options: question.options.map((option) => ({
                   text: option.text,
-                  optionType: optionType,
                   imageURL: option.imageURL,
                 })),
               })),
@@ -168,10 +171,13 @@ const CreateQuestion = ({ closeModal }) => {
       }
     }
   };
-
+const handleCancel = () => {
+    closeModal();
+    resetState();
+  }
   return (
     <>
-      <div className={createQuiz.modal_wraper} onClick={closeModal}></div>
+      <div className={createQuiz.modal_wraper}></div>
 
       {!linkModal && (
         <div className={createQuiz.question_container}>
@@ -228,7 +234,7 @@ const CreateQuestion = ({ closeModal }) => {
               )
           )}
           <div className={createQuiz.create_quiz_btns}>
-            <button onClick={closeModal}>Cancel</button>
+            <button onClick={handleCancel}>Cancel</button>
             <button onClick={handleAddQuestionToQuiz}>Create Quiz</button>
           </div>
           {error && (

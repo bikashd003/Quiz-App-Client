@@ -1,6 +1,17 @@
-import { createContext, useState, useRef } from "react";
+import { createContext, useState } from "react";
 
 const QuizContext = createContext();
+
+const initialQuestion = {
+  id: 1,
+  text: "",
+  options: [
+    { text: "", imageURL: "" },
+    { text: "", imageURL: "" },
+    { text: "", imageURL: "" },
+  ],
+  correctOption: null,
+};
 
 const QuizProvider = ({ children }) => {
   const [dasboardState, setDashboardState] = useState("dashboard");
@@ -11,14 +22,7 @@ const QuizProvider = ({ children }) => {
   const [timer, setTimer] = useState(0);
   const [optionType, setOptionType] = useState("text");
   const [linkModal, setLinkModal] = useState(false);
-  const [questions, setQuestions] = useState([
-    {
-      id: 1,
-      text: "",
-      options: ["", "", ""],
-      correctOption: "",
-    },
-  ]);
+  const [questions, setQuestions] = useState([initialQuestion]);
 
   const addQuestion = () => {
     const newQuestion = {
@@ -37,6 +41,27 @@ const QuizProvider = ({ children }) => {
   const removeQuestion = (id) => {
     const updatedQuestions = questions.filter((_, idx) => idx !== id);
     setQuestions(updatedQuestions);
+  };
+
+  const resetState = () => {
+    setCreateModal(false);
+    setAnalysisQuizId(null);
+    setTitle("");
+    setQuizType("");
+    setTimer(0);
+    setOptionType("text");
+    setLinkModal(false);
+    setQuestions([{
+      id: 1,
+      text: "",
+      options: [
+        { text: "", imageURL: "" },
+        { text: "", imageURL: "" },
+        { text: "", imageURL: "" },
+      ],
+      correctOption: null,
+    }]);
+
   };
 
   return (
@@ -62,10 +87,12 @@ const QuizProvider = ({ children }) => {
         setCreateModal,
         analysisQuizId,
         setAnalysisQuizId,
+        resetState,
       }}
     >
       {children}
     </QuizContext.Provider>
   );
 };
+
 export { QuizContext, QuizProvider };

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import quizAnalysis from "./QuizAnalysis.module.css";
+import takeQuiz from "../TakeQuiz/TakeQuiz.module.css";
 import { QuizContext } from "../CreateQuiz/QuizContext";
 import { API } from "../../Services/Api";
 import axios from "axios";
@@ -77,7 +78,13 @@ const QuizAnalysis = () => {
                     {question.options.map((option, index) => (
                       <h2 key={index}>
                         {option.attempts || 0} <br />
-                        <span>{option.text || option.imegURL}</span>
+                        {option.text &&  <h3>{option.text}</h3> }
+                      {option.imageURL && (
+                        <img
+                          src={option.imageURL}
+                          className={takeQuiz.optionImage}
+                        />
+                      )}
                       </h2>
                     ))}
                   </div>

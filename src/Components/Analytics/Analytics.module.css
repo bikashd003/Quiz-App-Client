@@ -29,13 +29,13 @@
 .analysis_navaber h2:nth-child(4) {
   margin-left: -39vw;
 }
-.analysis_link{
+.analysis_link {
   font-family: "poppins";
   color: #000000;
   font-weight: 600;
   margin-left: -15vw;
 }
-.quiz_details_container{
+.quiz_details_container {
   height: 45vw;
   overflow-y: auto;
 }
@@ -141,4 +141,13 @@
   font-family: "poppins";
   font-size: 1.5vw;
   padding: 0.5vw 3vw;
+}
+.footer h4 {
+  padding: 0 2vw;
+  color: #474444;
+  font-family: "poppins";
+  font-size: 1vw;
+  font-weight: 400;
+  display: flex;
+  justify-content: end;
 }

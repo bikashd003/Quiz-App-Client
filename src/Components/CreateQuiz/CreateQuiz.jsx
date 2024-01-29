@@ -6,7 +6,8 @@ import CreateQuestion from "./CreateQuestion";
 const CreateQuiz = ({ closeModal }) => {
   const [error, setError] = useState(false);
   const [questionModal, setQuestionModal] = useState(false);
-  const { title,setTitle,quizType,setQuizType } = useContext(QuizContext);
+  const { title, setTitle, quizType, setQuizType, resetState } =
+    useContext(QuizContext);
 
   const handleQuizType = (type) => {
     setQuizType(type);
@@ -20,12 +21,21 @@ const CreateQuiz = ({ closeModal }) => {
       setQuestionModal(true);
     }
   };
-
+  const handleCancel = () => {
+    closeModal();
+    resetState();
+  };
   return (
     <>
       <div className={createQuiz.modal_wraper} onClick={closeModal}></div>
       <div className={createQuiz.create_container}>
-        <input type="text" placeholder="Quiz name" value={title} onChange={(e)=>setTitle(e.target.value)} autoComplete="off" />
+        <input
+          type="text"
+          placeholder="Quiz name"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          autoComplete="off"
+        />
         <div className={createQuiz.quiz_type}>
           <h1>Quiz Type</h1>
           <h3
@@ -42,7 +52,7 @@ const CreateQuiz = ({ closeModal }) => {
           </h3>
         </div>
         <div className={createQuiz.create_quiz_btns}>
-          <button onClick={closeModal}>Cancel</button>
+          <button onClick={handleCancel}>Cancel</button>
           <button onClick={handleContinue}>Continue</button>
         </div>
         {error && <p>Invalid Credentials</p>}

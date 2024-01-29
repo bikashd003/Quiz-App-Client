@@ -14,6 +14,7 @@ const EditQuiz = ({ closeModal }) => {
     setQuizType,
     setTimer,
     setOptionType,
+    optionType,
     questions,
     addQuestion,
     removeQuestion,
@@ -21,6 +22,7 @@ const EditQuiz = ({ closeModal }) => {
     linkModal,
     setLinkModal,
     analysisQuizId,
+    resetState,
   } = useContext(QuizContext);
   const [startQuestionIndex, setStartQuestionIndex] = useState(1);
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(1);
@@ -40,16 +42,20 @@ const EditQuiz = ({ closeModal }) => {
           setQuizId(res.data._id);
           setQuizType(res.data.quizType);
           setTitle(res.data.quizTitle);
-          setOptionType(res.data.questions[0]?.optionType || res.data.polls[0]?.optionType);
-          setQuestions(
-            res.data.questions.map((question) => ({
-              ...question,
-              correctOption: question.correctOption,
-            })) || res.data.polls
-          );
-         
-          if (res.data.questions) {
+          if (res.data.quizType === "Q&A") {
+            setOptionType(res.data.questions[0].optionType);
             setTimer(res.data.questions[0].timer);
+
+            setQuestions(
+              res.data.questions.map((question) => ({
+                ...question,
+                correctOption: question.correctOption,
+              }))
+            );
+          }
+          if (res.data.quizType === "Poll Type") {
+            setOptionType(res.data.polls[0].optionType);
+            setQuestions(res.data.polls);
           }
         })
         .catch((err) => {
@@ -68,6 +74,7 @@ const EditQuiz = ({ closeModal }) => {
   };
   const handleOptionChange = (questionIndex, optionIndex, type, value) => {
     const updatedQuestions = [...questions];
+
     if (type === "text") {
       updatedQuestions[questionIndex].options[optionIndex] = {
         ...updatedQuestions[questionIndex].options[optionIndex],
@@ -79,6 +86,7 @@ const EditQuiz = ({ closeModal }) => {
         imageURL: value,
       };
     }
+
     setQuestions(updatedQuestions);
   };
   const handleRemoveOption = (questionIndex, optionIndex) => {
@@ -106,7 +114,6 @@ const EditQuiz = ({ closeModal }) => {
 
   const handleRemoveQuestion = (index) => {
     removeQuestion(questions[index - 1].id);
-    console.log(selectedQuestionIndex);
     setSelectedQuestionIndex((prev) => (prev > 1 ? prev - 1 : prev));
   };
   const handleTimerChange = (timerValue) => {
@@ -117,7 +124,7 @@ const EditQuiz = ({ closeModal }) => {
   };
   const handleUpdateQuiz = () => {
     setLinkModal(true);
-    console.log(questions)
+    console.log(questions);
     questions.map((question) => {
       if (!question.text) {
         setError(true);
@@ -139,6 +146,7 @@ const EditQuiz = ({ closeModal }) => {
               quizType: quizType,
               questions: questions.map((question) => ({
                 text: question.text,
+                optionType: optionType,
                 correctOption: question.correctOption,
                 timer: timer,
                 options: question.options.map((option) => ({
@@ -168,6 +176,7 @@ const EditQuiz = ({ closeModal }) => {
               quizType: quizType,
               polls: questions.map((question) => ({
                 text: question.text,
+                optionType: optionType,
                 options: question.options.map((option) => ({
                   text: option.text,
                   imageURL: option.imageURL,
@@ -190,7 +199,10 @@ const EditQuiz = ({ closeModal }) => {
       }
     }
   };
-
+  const handleCancel = () => {
+    resetState();
+    closeModal();
+  };
   return (
     <>
       <div className={createQuiz.modal_wraper}></div>
@@ -250,7 +262,7 @@ const EditQuiz = ({ closeModal }) => {
               )
           )}
           <div className={createQuiz.create_quiz_btns}>
-            <button onClick={closeModal}>Cancel</button>
+            <button onClick={handleCancel}>Cancel</button>
             <button onClick={handleUpdateQuiz}>Update Quiz</button>
           </div>
           {error && (

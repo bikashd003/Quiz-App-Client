@@ -16,7 +16,6 @@ const Dashboard = () => {
     useContext(QuizContext);
   const navigate = useNavigate();
   const closeModal = () => {
-    setCreateModal(false);
     setEditModal(false);
   };
   useEffect(() => {

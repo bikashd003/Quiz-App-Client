@@ -4,16 +4,17 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(189, 189, 189, 0.9);
+  background-color: rgba(189, 189, 189, 0.5);
 }
 .create_container {
   position: absolute;
+  overflow-y: hidden;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 10px;
-  padding: 5vw;
+  padding:5vw;
 }
 .create_container > input {
   width: 40vw;
@@ -98,7 +99,7 @@
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 10px;
-  padding: 5vw;
+  padding:2vw 4vw;
   width: 70vw;
 }
 .switch_question {
@@ -112,7 +113,7 @@
 }
 .question_number {
   cursor: pointer;
-  padding: 1.5vw 2vw;
+  padding: 1.5vw 2.1vw;
   border-radius: 50%;
   background-color: transparent;
   color: #9f9f9f;
@@ -162,6 +163,16 @@
   align-items: center;
   gap: 1vw;
 }
+.correct_option[type="radio"] {
+  border: 2px solid #d9d9d9;
+  height: 1.2vw;
+  width: 1.2vw;
+}
+.correct_option[type="radio"]:checked {
+  accent-color: #60b84b;
+  
+}
+
 .option_type h2 {
   font-size: 1.5vw;
   margin-right: 1vw;
@@ -188,6 +199,12 @@
   border: 0;
   box-shadow: 0px 0px 10px 0px #00000026;
 }
+.option_item input.correctOption {
+  background-color: #60b84b;
+}
+.option_checked[type="radio"]:checked {
+  accent-color: #353434;
+}
 
 .option_item {
   display: flex;
@@ -199,6 +216,7 @@
   background-color: transparent;
 }
 .add_option {
+  cursor: pointer;
   color: #474444;
   font-family: "poppins";
   font-weight: 600;
@@ -212,28 +230,27 @@
   margin-left: 2.2vw;
 }
 .delete_option {
+  cursor: pointer;
   color: red;
   font-size: 2vw;
 }
 
-.question_wraper{
+.question_wraper {
   justify-content: space-between;
   display: flex;
 }
-.timer_container{
+.timer_container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1vw;
-
 }
-.timer_container h1{
-color:#9f9f9f;
-font-family: "poppins";
-font-size: 2vw;
-
+.timer_container h1 {
+  color: #9f9f9f;
+  font-family: "poppins";
+  font-size: 2vw;
 }
-.timer_container h2{
+.timer_container h2 {
   color: #9f9f9f;
   font-family: "poppins";
   font-size: 1.5vw;
@@ -244,25 +261,24 @@ font-size: 2vw;
   text-align: center;
   cursor: pointer;
   font-weight: 500;
-
 }
-.selected{
-  border:3px solid #60b84b;
+.selected {
+  border: 3px solid #60b84b;
 }
-.timer_container h2.selected{
- background-color: #D60000;
- color: #fff;
- font-weight: 500;
+.timer_container h2.selected_timer {
+  background-color: #d60000;
+  color: #fff;
+  font-weight: 500;
 }
-.error_message{
+.error_message {
   font-weight: 500;
   font-family: "poppins";
-  color: #D60000;
+  color: #d60000;
   font-size: 1.5vw;
   display: flex;
   justify-content: center;
 }
-.link_modal{
+.link_modal {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -276,22 +292,21 @@ font-size: 2vw;
   align-items: center;
   gap: 1vw;
 }
-.link_modal h1{
+.link_modal h1 {
   font-family: "poppins";
   color: #474444;
   font-size: 2.5vw;
   text-align: center;
 }
-.link_modal input{
+.link_modal input {
   font-family: "poppins";
   color: #474444;
   font-size: 2.2vw;
-  background-color: #EDEDED;
+  background-color: #ededed;
   border-radius: 10px;
   border: 0;
-
 }
-.link_modal .share_link{
+.link_modal .share_link {
   font-family: "poppins";
   color: #fff;
   font-size: 1.5vw;
@@ -300,9 +315,9 @@ font-size: 2vw;
   border: 0;
   cursor: pointer;
   width: fit-content;
-padding: 0.5vw 4vw;
+  padding: 0.5vw 4vw;
 }
-.link_modal .close_link{
+.link_modal .close_link {
   cursor: pointer;
   position: absolute;
   right: 20px;

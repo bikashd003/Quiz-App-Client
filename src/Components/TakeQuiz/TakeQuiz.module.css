@@ -1,4 +1,5 @@
-.take_quiz_container {
+.take_quiz_container,
+.score_container {
   background-color: #041325;
   height: 100vh;
   width: 100vw;
@@ -6,6 +7,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .questions_window {
   background-color: #fff;
   padding: 2vw;
@@ -37,16 +39,20 @@
   gap: 5vw;
   margin-bottom: 1.5vw;
 }
-.question_options section h2 {
+.question_options>h1{
+  font-size: 3.5vw;
+  text-align: center;
+}
+.question_options section h3 {
   color: #474444;
   font-weight: 600;
   font-size: 1.8vw;
-  
 }
 .optionImage {
   height: 5vw;
   width: 8vw;
   border-radius: 10px;
+  object-fit: cover;
 }
 .question_options section {
   background-color: #f0f0f0;
@@ -55,10 +61,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1vw;
 }
-.question_options div h2.selected {
-  border: 5px solid #5076ff;
-}
+
 .submit_button button {
   text-align: center;
   color: #fff;
@@ -83,6 +88,10 @@
   padding: 2vw 8vw;
   border-radius: 10px;
 }
+.trophy_window img {
+  height: 20vh;
+  width: 40vw;
+}
 .trophy_window h1 {
   font-family: "poppins";
   color: #474444;
@@ -96,4 +105,57 @@
 .selected {
   outline: 5px solid #60b84b;
   outline-offset: -5px;
+}
+@media (max-width: 756px) {
+  .take_quiz_container,.score_container {
+    background-color: #fff;
+  }
+  .trophy_window h1 span {
+    text-align: center;
+    display: block;
+    font-size: 10vw;
+  }
+  .trophy_window img {
+    height: 40vh;
+    width: 70vw;
+  }
+  .trophy_window h1 {
+    text-align: center;
+    font-size: 10vw;
+  }
+  .question_options div {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .selected {
+    outline: 2px solid #60b84b;
+    outline-offset: -2px;
+  }
+  .submit_button button {
+    margin-top: 4vw;
+    font-size: 6vw;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 1vw 15vw;
+  }
+  .optionImage {
+    height: 30vw;
+    width: 80vw;
+    border-radius: 5px;
+    object-fit:cover;
+  }
+  .question_options section {
+   width: 85vw;
+  }
+  .question_options section h3 {
+    font-size: 4vw;
+  }
+  .number_timer h1{
+    font-size: 6vw;
+  }
+  .questions_window {
+    width: 80vw;
+  }
+  .question_options>h1{
+    font-size: 6vw;
+  }
 }
