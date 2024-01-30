@@ -15,10 +15,23 @@
   flex: 9 0 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-top: 5vw;
+  margin-top: 1.5vw;
   padding: 0 5vw;
-  gap: 4vw;
+  gap: 2vw;
+  height: 90vh;
+  overflow: auto;
+}
+.analysis_container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.analysis_container::-webkit-scrollbar-thumb {
+  background-color: #bbbbbb;
+  border-radius: 6px;
+}
+
+.analysis_container::-webkit-scrollbar-thumb:hover {
+  background-color: #949393;
 }
 .heading {
   display: flex;
@@ -27,13 +40,25 @@
 .heading h1 {
   font-family: "poppins";
   color: #5076ff;
-  font-size: 2.5vw;
+  font-size: 2vw;
   font-weight: 600;
 }
+@media (max-width:1200px) {
+  .heading h1 {
+    font-size: 2.5vw;
+  }
+  .analysis_quiz > h1 {
+    font-size: 2vw;
+  }
+  .options h2 {
+    font-size: 2vw;
+  }
+}
 .analysis_quiz > h1 {
-  font-size: 2vw;
+  font-size: 1.5vw;
   font-family: "poppins";
   font-weight: 600;
+  margin-bottom: 1vw;
 }
 .heading .impression {
   font-family: "poppins";
@@ -43,15 +68,26 @@
 }
 .options {
   display: flex;
-  gap: 2vw;
-  margin: 2vw 0;
+  gap: 1vw;
+  margin: 0 0 1vw 0;
 }
 .options h2 {
   background-color: #fff;
-  font-size: 2vw;
+  font-size: 1.5vw;
   border-radius: 10px;
   text-align: center;
   padding: 1vw 2vw;
+  color: #474444;
+}
+.optionImage{
+
+}
+.options h3 {
+  background-color: #fff;
+  font-size: 1.5vw;
+  border-radius: 10px;
+  text-align: center;
+  padding: 0.5vw;
   color: #474444;
 }
 .options h2 span {
