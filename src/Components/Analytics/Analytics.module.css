@@ -120,6 +120,7 @@
   gap: 2vw;
 }
 .delete_container .delete_btn button:nth-child(1) {
+  cursor: pointer;
   background-color: #ff4b4b;
   border: 0;
   outline: none;
@@ -131,6 +132,7 @@
   width: 20vw;
 }
 .delete_container .delete_btn button:nth-child(2) {
+  cursor: pointer;
   box-shadow: 0px 0px 15px 0px #00000040;
   background-color: transparent;
   width: 20vw;

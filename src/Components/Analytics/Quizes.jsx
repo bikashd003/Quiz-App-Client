@@ -46,8 +46,8 @@ const Quizes = ({ quiz, index, fetchDataAndUpdate,popup }) => {
   }, [quizId, type]);
   
   const handleLinkCopy = (quizId) => {
-    let link;
-    link = `http://localhost:5173/quiz/${quizId}`;
+    const currentDomain = window.location.origin;
+    const link = `${currentDomain}/quiz/${quizId}`;
     
     navigator.clipboard
       .writeText(link)

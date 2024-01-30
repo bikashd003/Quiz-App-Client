@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/quiz/:quizId",
+    path:"/quiz/:quizId",
     loader: async ({ params }) => {
     return  await axios.get(`${API}/quiz-impression/${params.quizId}`);
     },
