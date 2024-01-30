@@ -123,10 +123,21 @@
   cursor: pointer;
   position: absolute;
   cursor: pointer;
-  top: -80%;
+  top: -140%;
   left: 80%;
-  font-size: 1.5vw;
+  font-size: 2vw;
   font-family: "poppins";
+}
+@media (max-width:1400px) {
+  .remove_question {
+    cursor: pointer;
+    position: absolute;
+    cursor: pointer;
+    top: -90%;
+    left: 80%;
+    font-size: 2vw;
+    font-family: "poppins";
+}
 }
 .add_question_btn {
   background-color: transparent;

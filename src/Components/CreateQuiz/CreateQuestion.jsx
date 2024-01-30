@@ -1,4 +1,4 @@
-import React, {useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { QuizContext } from "./QuizContext";
 import createQuiz from "./CreateQuiz.module.css";
 import Question from "./Question";
@@ -26,9 +26,15 @@ const CreateQuestion = ({ closeModal }) => {
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(1);
   const [error, setError] = useState(false);
   const [quizId, setQuizId] = useState("");
-  const[optionChange,setOptionChange]=useState("no")
+  const [optionChange, setOptionChange] = useState("no");
+  useEffect(() => {
+    const emptyQuestions = questions.map((q) => ({
+      ...q,
+      options: q.options.map((opt) => ({ text: "", imageURL: "" })),
+    }));
+    setQuestions(emptyQuestions);
+  }, [optionType]);
 
-  
   const handleQuestionType = (type) => {
     setOptionType(type);
   };
@@ -52,10 +58,9 @@ const CreateQuestion = ({ closeModal }) => {
         imageURL: value,
       };
     }
-  
+
     setQuestions(updatedQuestions);
   };
-  
 
   const handleRemoveOption = (questionIndex, optionIndex) => {
     const updatedQuestions = [...questions];
@@ -171,10 +176,10 @@ const CreateQuestion = ({ closeModal }) => {
       }
     }
   };
-const handleCancel = () => {
+  const handleCancel = () => {
     closeModal();
     resetState();
-  }
+  };
   return (
     <>
       <div className={createQuiz.modal_wraper}></div>
