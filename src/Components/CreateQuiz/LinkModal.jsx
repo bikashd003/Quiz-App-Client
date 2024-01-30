@@ -14,7 +14,8 @@ const LinkModal = ({ closeModal, selectedQuestionIndex, quizId }) => {
 
   useEffect(() => {
     if (quizId) {
-      const link = `http://localhost:5173/quiz/${quizId}`;
+      const currentDomain = window.location.origin;
+      const link = `${currentDomain}/quiz/${quizId}`;
       setQuizLink(link);
     }
   }, [quizId]);
