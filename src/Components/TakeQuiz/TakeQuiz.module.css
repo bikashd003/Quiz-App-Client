@@ -89,8 +89,14 @@
   border-radius: 10px;
 }
 .trophy_window img {
-  height: 20vh;
-  width: 40vw;
+  height: 40vh;
+  width: 20vw;
+}
+@media (max-width:1200px) {
+  .trophy_window img {
+    height: 20vh;
+    width: 40vw;
+  }
 }
 .trophy_window h1 {
   font-family: "poppins";

@@ -35,7 +35,7 @@ const Signup = ({ state }) => {
       setError(true);
     }
    
-    if (!error && !passwordError) {
+    if (!error && !passwordError && !confirmPassword && !weekPasswordError) {
       try {
         await axios
           .post(`${API}/register`, {
