@@ -25,6 +25,7 @@ const Signup = ({ state }) => {
     const strongPasswordRegex =
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!strongPasswordRegex.test(password)) {
+      setPasswordError(false)
       setError(false)
       setWeekPasswordError(true);
       setPassword("")
@@ -35,7 +36,7 @@ const Signup = ({ state }) => {
       setError(true);
     }
    
-    if (!error && !passwordError && !confirmPassword && !weekPasswordError) {
+    if (!error && !passwordError && confirmPassword && !weekPasswordError) {
       try {
         await axios
           .post(`${API}/register`, {
@@ -54,6 +55,10 @@ const Signup = ({ state }) => {
       } catch (err) {
         console.error(err);
       }
+    }
+    else{
+      alert("something wrong")
+      console.log(error,passwordError,confirmPassword,weekPasswordError)
     }
   };
 
