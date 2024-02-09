@@ -3,6 +3,8 @@ import Signup from './Signup'
 import loginsignup from "./LoginSignup.module.css"
 import Login from './Login'
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginSignup = () => {
     const[state,setState]=useState("signup")
@@ -42,6 +44,7 @@ const LoginSignup = () => {
         </div>
         {state==="signup"?<Signup state={setState}/>:<Login/>}
     </div>
+    <ToastContainer />
     </main>
     </>
   )

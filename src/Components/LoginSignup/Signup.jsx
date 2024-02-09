@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Input from "./Input";
 import loginsignup from "./LoginSignup.module.css";
 import axios from "axios";
 import { API } from "../../Services/Api.js";
+import { toast } from "react-toastify";
+import { PuffLoader } from "react-spinners";
 
 const Signup = ({ state }) => {
   const [name, setName] = useState("");
@@ -12,53 +14,54 @@ const Signup = ({ state }) => {
   const [error, setError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [weekPasswordError, setWeekPasswordError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-   
+    if (!name || !email || !password || !confirmPassword) {
+      setError(true);
+      return;
+    }
     if (password !== confirmPassword) {
       setPasswordError(true);
-      setPassword("")
-      setConfirmPassword("")
+      setPassword("");
+      setConfirmPassword("");
+      return;
     }
 
     const strongPasswordRegex =
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!strongPasswordRegex.test(password)) {
-      setPasswordError(false)
-      setError(false)
+      setPasswordError(false);
+      setError(false);
       setWeekPasswordError(true);
-      setPassword("")
-      setConfirmPassword("")
+      setPassword("");
+      setConfirmPassword("");
       return;
     }
-    if (!name || !email || !password || !confirmPassword) {
-      setError(true);
-    }
-   
-    if (!error && !passwordError && confirmPassword && !weekPasswordError) {
-      try {
-        await axios
-          .post(`${API}/register`, {
-            name,
-            email,
-            password,
-            confirmPassword,
-          })
-          .then((res) => {
 
-            state("login");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } catch (err) {
-        console.error(err);
+    setWeekPasswordError(false);
+    setPasswordError(false);
+    setLoading(true);
+
+    try {
+      const response = await axios.post(`${API}/register`, {
+        name,
+        email,
+        password,
+        confirmPassword,
+      });
+      if (response.status === 201) {
+        state("login");
       }
-    }
-    else{
-      alert("something wrong")
-      console.log(error,passwordError,confirmPassword,weekPasswordError)
+    } catch (error) {
+      if (error.response.data.error === "Email already exist") {
+        toast("Admin already exists");
+      } else {
+        toast("Error submitting data:");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,9 +99,14 @@ const Signup = ({ state }) => {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
       <button type="submit" className={loginsignup.submit_btn}>
-        Sign-Up
+        {loading ? (
+          <PuffLoader color="#ffff" height={5} radius={2} width={4} size={40} />
+        ) : (
+          "Sign-Up"
+        )}
       </button>
     </form>
   );
 };
+
 export default Signup;
