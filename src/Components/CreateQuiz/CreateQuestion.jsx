@@ -101,12 +101,23 @@ const CreateQuestion = ({ closeModal }) => {
     const token = localStorage.getItem("token");
 
     questions.map((question) => {
-      if (!question.text) {
+      if (question.text==="") {
         setError(true);
-      } else if (quizType === "Q&A") {
-        if (!question.correctOption) {
+        return;
+      } else if (quizType === "Q&A" && question.correctOption===null) {
           setError(true);
+          return;
+      } 
+      let filledOptionCount = 0;
+      question.options.map((option) => {
+        if (option.text.trim()==="" || option.imageURL.trim()==="") {
+          filledOptionCount++;
         }
+      });
+
+      if (filledOptionCount < 2) {
+        setError(true);
+        return;
       } else {
         setError(false);
       }
