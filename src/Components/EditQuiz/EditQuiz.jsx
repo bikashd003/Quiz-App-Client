@@ -124,17 +124,14 @@ const EditQuiz = ({ closeModal }) => {
   };
   const handleUpdateQuiz = () => {
     setLinkModal(true);
-    console.log(questions);
     questions.map((question) => {
-      if (!question.text) {
+      if (question.text==="") {
         setError(true);
-      } else if (quizType === "Q&A") {
-        if (!question.correctOption) {
+        return;
+      } else if (quizType === "Q&A" && question.correctOption===null) {
           setError(true);
-        }
-      } else {
-        setError(false);
-      }
+          return;
+      } 
     });
     if (!error) {
       if (quizType === "Q&A") {
