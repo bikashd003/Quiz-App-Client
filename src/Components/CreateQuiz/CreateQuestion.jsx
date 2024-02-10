@@ -108,21 +108,6 @@ const CreateQuestion = ({ closeModal }) => {
           setError(true);
           return;
       } 
-      let filledOptionCount = 0;
-      question.options.map((option) => {
-        if (option.text.trim() !== "" && option.imageURL.trim() !== "") {
-          filledOptionCount++;
-        }
-      });
-      
-      if (filledOptionCount >= 2) {
-        setError(false);
-        return;
-      } 
-      else{
-        setError(true);
-        return;
-      }
     });
     if (!error) {
       if (quizType === "Q&A") {
@@ -254,11 +239,11 @@ const CreateQuestion = ({ closeModal }) => {
             <button onClick={handleCancel}>Cancel</button>
             <button onClick={handleAddQuestionToQuiz}>Create Quiz</button>
           </div>
-          {error && (
-            <h1 className={createQuiz.error_message}>
+          {error ?
+           ( <h1 className={createQuiz.error_message}>
               Please fill all the fields
-            </h1>
-          )}
+            </h1>):""
+          }
         </div>
       )}
       {linkModal && (
