@@ -117,9 +117,11 @@ const CreateQuestion = ({ closeModal }) => {
       
       if (filledOptionCount >= 2) {
         setError(false);
+        return;
       } 
       else{
         setError(true);
+        return;
       }
     });
     if (!error) {
