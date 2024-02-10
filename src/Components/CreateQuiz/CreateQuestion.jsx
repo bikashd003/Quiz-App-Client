@@ -110,19 +110,18 @@ const CreateQuestion = ({ closeModal }) => {
       } 
       let filledOptionCount = 0;
       question.options.map((option) => {
-        if (option.text.trim()==="" || option.imageURL.trim()==="") {
+        if (option.text.trim() !== "" && option.imageURL.trim() !== "") {
           filledOptionCount++;
         }
       });
-
-      if (filledOptionCount < 2) {
-        setError(true);
-        return;
-      } else {
+      
+      if (filledOptionCount >= 2) {
         setError(false);
+      } 
+      else{
+        setError(true);
       }
     });
-
     if (!error) {
       if (quizType === "Q&A") {
         axios
