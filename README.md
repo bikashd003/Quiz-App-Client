@@ -1,8 +1,26 @@
-# React + Vite
+# Quiz Website Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Quiz web app Frontend repository! This project is part of a comprehensive MERN stack of cuvettes, focusing on creating a versatile quiz application to enhance user engagement and interaction.
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This repository contains the frontend codebase for the quiz web app. The frontend is built using React.js. The website provides a user-friendly interface for quiz participants to answer questions, view results, and interact with quizzes.
+
+## Features
+
+- Interactive quiz interface for users to answer questions.
+- Real-time feedback and scoring system.
+- Dynamic dashboard for administrators to create, customize, and manage quizzes.
+- Professional analytics dashboard for administrators to track quiz performance and trends.
+
+## Server Project Link
+
+The backend server for this project can be found [here](https://github.com/bikashd003/Quiz-App-Server).
+
+## Deployed Link
+
+The website is deployed and accessible at [https://brainbrustquiz.netlify.app/](https://brainbrustquiz.netlify.app/dashboard).
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and create a pull request with your proposed changes.
